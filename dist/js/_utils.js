@@ -1,22 +1,5 @@
 $(document).ready(function () {
     $('.graph').html(`<div class="col-md-12 text-center p-t-15">${loading_template_plain}</div>`);
-    $(".table:not(.no-datatable)").DataTable({
-        dom: "Bfrtlip",
-        ordering: false,
-        paging: true,
-        pageLength: 10,
-        fixedColumns: {
-            leftColumns: 1,
-        },
-        buttons: ["copy", "csv", "excel", "pdf", "print", "pageLength"],
-    });
-
-    $("td").each(function (index, element) {
-        var cell = $(this).html();
-        if (!isNaN(cell)) {
-            $(this).html(formatNumber(parseFloat(cell).toFixed(2)));
-        }
-    });
 
 });
 
