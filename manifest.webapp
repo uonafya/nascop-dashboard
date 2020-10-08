@@ -1,0 +1,21 @@
+{
+    "version": "1.0.0",
+    "name": "Nascop Dashboard",
+    "description": "An App to Visualize Nascop indicators",
+    "launch_path": "html/index.html",
+    "appType": "APP",
+    "icons": {
+        "48": "assets/images/index.png"
+    },
+    "developer": {
+        "name": "NASCOP",
+        "url": ""
+    },
+    "default_locale": "en",
+    "activities": {
+        "dhis": {
+            "href": "*"            
+        }
+    }
+}
+
