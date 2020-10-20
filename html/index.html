@@ -260,7 +260,8 @@
                 }
                 //unlabelled values to plot
                 let reached_values = [];
-                let missed_values = []
+                let missed_values = [];
+                let unreached_values = [];
             justFetch(url, {})
                 .then(response=>{
                     response.rows.map( row => {
@@ -278,7 +279,10 @@
                     });
                     missed_values = Object.keys(missed).map(function (key) {
                         return missed[key];
-                    })
+                    });
+
+                    const unreached = reached_values[4] - reached_values[3];
+                    unreached_values = [unreached, unreached, unreached, unreached, 0];
                     console.log(reached_values);
                     console.log(missed_values);
 
@@ -291,7 +295,7 @@
                                 text: 'ANC CASCADE'
                             },
                             xAxis: {
-                                categories: ['pregnant women completing 4 ANC visits', 'Testing for Syphilis', 'Number tested for HIV at ANC', 'First ANC Visit', 'Expected Pregnancies']
+                                categories: ['Pregnant women completing 4 ANC visits', 'Testing for Syphilis', 'Number tested for HIV at ANC', 'First ANC Visit', 'Expected Pregnancies']
                             },
                             yAxis: {
                                 min: 0,
@@ -309,7 +313,7 @@
                             },
                             series: [{
                                 name: 'Unreached Mothers',
-                                data: [204740, 294044, 342755, 354756, 0]
+                                data: unreached_values
                             }, {
                                 name: 'Missed Opportunities',
                                 data: missed_values
