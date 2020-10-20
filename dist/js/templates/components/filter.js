@@ -306,7 +306,7 @@ const getPeBtwnYears = (y1, y2, returntype) => {
 let getDefaultPeriod = () =>{
     let yr = new Date().getFullYear();
     let mn = parseFloat(new Date().getMonth())+1
-    let qt
+    let qt 
     if(mn<4){
         qt = 1   
     }else if(mn>=4 && mn < 7){
@@ -319,6 +319,7 @@ let getDefaultPeriod = () =>{
     for (let c = 1; c <= qt; c++) {
         dp += yr+'Q'+c+';'
     }
+    console.log('hahah',dp)
     return dp
 }
 

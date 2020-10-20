@@ -8,7 +8,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <!-- Favicon icon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/index.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/nascop-logo.png" />
         <title>
            Home | Nascop Dashboard
         </title>
@@ -188,7 +188,7 @@
                         is_ward:false, 
                         is_facility:false, 
                         is_period:true, 
-                        is_period_range:true}
+                        is_period_range:false}
                     let is_loading = {is_loading: false}
                     let footer_yr = { yr: new Date().getFullYear()}
                     let page_status = {title: '', message: '', type: 'info', hidden: true} //type: info, success, danger
@@ -219,18 +219,20 @@
                 if(prop && prop.ou){
                     org_unit = prop.ou
                 }
-                let prd = getDefaultPeriod()
+                let prd = `THIS_YEAR`
                 if(prop && prop.pe){
-                    prd = getQuartersInYear(prop.pe)
+                    prd = prop.pe
                 }
-                if(prop && prop.pe_to){
-                    prd = getPeBtwnYears(prop.pe, prop.pe_to, 'quarters')
-                }
+                // if(prop && prop.pe_to){
+                //     prd = getPeBtwnYears(prop.pe, prop.pe_to, 'quarters')
+                // }
                 let ouFilterType = window.sessionStorage.getItem("ouFilterType") || "national"
                 
+
+                let ancascade = `https://hiskenya.org/api/26/analytics.json?dimension=ou:${org_unit}&dimension=dx:xNTM673ne69;kU5ew70I7kj;vlme3PThHl1;AlWRnztxhOU;VsRrzNMda22;qp8WQXmWtnr;ArG6zbCMBr2;pct05jgGcLt;uSxBUWnagGg;i5jVVTm1vI8;Fz0LzxMT1vV&filter=pe:${prd}&displayProperty=NAME`
                 
                
-            getAnc()
+            getAnc(ancascade)
             getMaternal()
             getInfant()
 
@@ -238,8 +240,56 @@
             
         }
 
-            function getAnc(){
-                Highcharts.chart('anc', {
+            function getAnc(url){
+                //dictionaries used to maintain order of the values
+                //indicators for reached anc
+                console.log(url)
+                let reached = {
+                    'Fz0LzxMT1vV': 'Pregnant women completing 4 ANC visits',
+                    'i5jVVTm1vI8': 'MOH 731 Syphilis Screened_1st ANC HV02-24',
+                    'vlme3PThHl1': 'Number tested for HIV at ANC',
+                    'uSxBUWnagGg': 'MOH 731 1st ANC Visits HV02-01',
+                    'pct05jgGcLt': 'Estimated Number of Pregnant Women'
+                };
+
+                //indicators for missed opportunities
+                let missed = {
+                    'qp8WQXmWtnr': 'Pregnant women completing 4 ANC visits missed opportunities',
+                    'xNTM673ne69': 'ANC Testing for Syphilis Missed Opportunity',
+                    'AlWRnztxhOU': 'Number tested for HIV at ANC Missed Opportunity',
+                    'placeholder1': 0,
+                    'placeholder2': 0
+                }
+                //unlabelled values to plot
+                let reached_values = [];
+                let missed_values = [];
+                let unreached_values = [];
+            justFetch(url, {})
+                .then(response=>{
+                    response.rows.map( row => {
+                            if(row[0] in reached) {
+                                reached[row[0]] = parseInt(row[2]);
+                            } else if(row[0] in missed){
+                                missed[row[0]] = parseInt(row[2]);
+                            }
+                        }
+                    );
+
+                    //convert dictionary to array by extracting values only
+                    reached_values = Object.keys(reached).map(function (key) {
+                        return reached[key];
+                    });
+                    missed_values = Object.keys(missed).map(function (key) {
+                        return missed[key];
+                    });
+
+                    const unreached = reached_values[4] - reached_values[3];
+                    unreached_values = [unreached, unreached, unreached, unreached, 0];
+                    console.log(reached_values);
+                    console.log(missed_values);
+
+                    //plot the charts
+                    Highcharts.chart('anc', {
                             chart: {
                                 type: 'bar'
                             },
@@ -247,7 +297,7 @@
                                 text: 'ANC CASCADE'
                             },
                             xAxis: {
-                                categories: ['pregnant women completing 4 ANC visits', 'Testing for Syphilis', 'Number tested for HIV at ANC', 'First ANC Visit', 'Expected Pregnancies']
+                                categories: ['Pregnant women completing 4 ANC visits', 'Testing for Syphilis', 'Number tested for HIV at ANC', 'First ANC Visit', 'Expected Pregnancies']
                             },
                             yAxis: {
                                 min: 0,
@@ -264,17 +314,20 @@
                                 }
                             },
                             series: [{
-                                
                                 name: 'Unreached Mothers',
-                                data: [70559, 70559, 70559, 70559, 0]
+                                data: unreached_values
                             }, {
                                 name: 'Missed Opportunities',
-                                data: [150016, 60712, 12001, 0, 0]
+                                data: missed_values
                             }, {
                                 name: 'Reached Mothers',
-                                data: [204740, 294044, 342755, 354756, 425315]
+                                data: reached_values
                             }]
                         });
+                
+                });
+            
+
                                         
             }
             function getMaternal(){

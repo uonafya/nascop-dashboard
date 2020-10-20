@@ -121,9 +121,10 @@ let justFetch = async (endpoint, postoptions) => {
     let req_hd = {};
     let headers = {};
     let final_endpoint = endpoint;
-    if (!location.hostname.includes("41.89.64.12")) {
+    if (!location.hostname.includes("hiskenya")) {
         let encurl = window.encodeURIComponent(window.btoa(endpoint));
-        final_endpoint = "http://41.76.170.34:5600/request/" + encurl;
+        // console.log('encurl = '+encurl);
+        final_endpoint = "http://41.76.170.34:3000/request/" + encurl;
     }
     req_hd.headers = headers;
     req_hd.method = req_method;
@@ -138,8 +139,7 @@ let justFetch = async (endpoint, postoptions) => {
         }
         return result_json;
     } catch (err) {
-        console.error(err)
-        return { error: true, msg: err.message, err: err };
+        return { error: true, msg: err.message };
     }
 };
 
