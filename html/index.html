@@ -8,7 +8,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <!-- Favicon icon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/index.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/nascop-logo.png" />
         <title>
            Home | Nascop Dashboard
         </title>
@@ -228,9 +228,10 @@
                 }
                 let ouFilterType = window.sessionStorage.getItem("ouFilterType") || "national"
                 
+                let ancascade = `https://hiskenya.org/api/26/analytics.json?dimension=ou:${org_unit}&dimension=dx:xNTM673ne69;AlWRnztxhOU;qp8WQXmWtnr;&filter=pe:THIS_YEAR&displayProperty=NAME`
                 
                
-            getAnc()
+            getAnc(ancascade)
             getMaternal()
             getInfant()
 
@@ -238,7 +239,37 @@
             
         }
 
-            function getAnc(){
+            function getAnc(url){
+            let y_data_unreached = []
+            let y_data_missed = []
+            let y_data_reached = []
+            let x_labels = []
+            justFetch(url, {})
+                .then(response=>{
+                    console.log(response)
+                        
+                        
+                        response.metaData.dimensions.dx.map(dx=>{
+                            
+                            let dat = {}
+                            dat.name = dx
+                            dat.data = []
+                            x_labels.push(response.metaData.items[dx].name)
+                            let n_val = response.rows.find(nr=> nr[0] == dx  ) || [0,0,0]
+                            dat.data.push(n_val[2])
+                           
+                            y_data_missed.push(dat.data)
+                            
+                           
+                        })
+                        ////////////////
+                        console.log(x_labels)
+                        // plotGraph(x_labels, "Period", y_data, "Percentage", "% of defaulters traced   ", null, "traced", "column", null)
+                
+                });
+            
+            
+            
                 Highcharts.chart('anc', {
                             chart: {
                                 type: 'bar'
@@ -264,7 +295,6 @@
                                 }
                             },
                             series: [{
-                                
                                 name: 'Unreached Mothers',
                                 data: [70559, 70559, 70559, 70559, 0]
                             }, {
