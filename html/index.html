@@ -228,7 +228,7 @@
                 }
                 let ouFilterType = window.sessionStorage.getItem("ouFilterType") || "national"
                 
-                let ancascade = `https://hiskenya.org/api/26/analytics.json?dimension=ou:${org_unit}&dimension=dx:xNTM673ne69;AlWRnztxhOU;qp8WQXmWtnr;&filter=pe:THIS_YEAR&displayProperty=NAME`
+                let ancascade = `https://hiskenya.org/api/26/analytics.json?dimension=ou:${org_unit}&dimension=dx:xNTM673ne69;kU5ew70I7kj;vlme3PThHl1;AlWRnztxhOU;VsRrzNMda22;qp8WQXmWtnr;ArG6zbCMBr2;pct05jgGcLt;uSxBUWnagGg;i5jVVTm1vI8;Fz0LzxMT1vV&filter=pe:THIS_YEAR&displayProperty=NAME`
                 
                
             getAnc(ancascade)
@@ -240,37 +240,28 @@
         }
 
             function getAnc(url){
-            let y_data_unreached = []
-            let y_data_missed = []
-            let y_data_reached = []
-            let x_labels = []
+                let reached = {
+                    'Fz0LzxMT1vV': 'Pregnant women completing 4 ANC visits',
+                    'i5jVVTm1vI8': 'MOH 731 Syphilis Screened_1st ANC HV02-24',
+                    'vlme3PThHl1': 'Number tested for HIV at ANC',
+                    'uSxBUWnagGg': 'MOH 731 1st ANC Visits HV02-01',
+                    'pct05jgGcLt': 'Estimated Number of Pregnant Women'
+                };
+                let reached_values = [];
             justFetch(url, {})
                 .then(response=>{
-                    console.log(response)
-                        
-                        
-                        response.metaData.dimensions.dx.map(dx=>{
-                            
-                            let dat = {}
-                            dat.name = dx
-                            dat.data = []
-                            x_labels.push(response.metaData.items[dx].name)
-                            let n_val = response.rows.find(nr=> nr[0] == dx  ) || [0,0,0]
-                            dat.data.push(n_val[2])
-                           
-                            y_data_missed.push(dat.data)
-                            
-                           
-                        })
-                        ////////////////
-                        console.log(x_labels)
-                        // plotGraph(x_labels, "Period", y_data, "Percentage", "% of defaulters traced   ", null, "traced", "column", null)
-                
-                });
-            
-            
-            
-                Highcharts.chart('anc', {
+                    response.rows.map( row => {
+                            if(row[0] in reached)
+                                reached[row[0]] = parseInt(row[2]);
+                        }
+                    );
+                    console.log(reached);
+                    reached_values = Object.keys(reached).map(function (key) {
+                        return reached[key];
+                    });
+                    console.log(reached_values);
+
+                    Highcharts.chart('anc', {
                             chart: {
                                 type: 'bar'
                             },
@@ -296,15 +287,19 @@
                             },
                             series: [{
                                 name: 'Unreached Mothers',
-                                data: [70559, 70559, 70559, 70559, 0]
+                                data: [204740, 294044, 342755, 354756, 0]
                             }, {
                                 name: 'Missed Opportunities',
                                 data: [150016, 60712, 12001, 0, 0]
                             }, {
                                 name: 'Reached Mothers',
-                                data: [204740, 294044, 342755, 354756, 425315]
+                                data: reached_values
                             }]
                         });
+                
+                });
+            
+
                                         
             }
             function getMaternal(){
