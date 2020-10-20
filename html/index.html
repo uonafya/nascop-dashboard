@@ -215,7 +215,7 @@
             window.fetchData = (prop) => {
                 // let org_unit = window.sessionStorage.getItem('ess_ou') || "HfVjCurKxh2"
                 let org_unit = "HfVjCurKxh2"
-                // let org_unit = "vvOK1BxTbet;HfVjCurKxh2;KGHhQ5GLd4k;Tvf1zgVZ0K4;MqnLxQBigG0;PFu8alU2KWG;uyOrcHZBpW0;nK0A12Q7MvS"   //"HfVjCurKxh2"
+
                 if(prop && prop.ou){
                     org_unit = prop.ou
                 }
@@ -223,9 +223,7 @@
                 if(prop && prop.pe){
                     prd = prop.pe
                 }
-                // if(prop && prop.pe_to){
-                //     prd = getPeBtwnYears(prop.pe, prop.pe_to, 'quarters')
-                // }
+
                 let ouFilterType = window.sessionStorage.getItem("ouFilterType") || "national"
                 
 
@@ -265,6 +263,7 @@
                 let unreached_values = [];
             justFetch(url, {})
                 .then(response=>{
+                    console.log(url);
                     response.rows.map( row => {
                             if(row[0] in reached) {
                                 reached[row[0]] = parseInt(row[2]);
