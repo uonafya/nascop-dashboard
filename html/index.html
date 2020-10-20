@@ -240,6 +240,8 @@
         }
 
             function getAnc(url){
+                //dictionaries used to maintain order of the values
+                //indicators for reached anc
                 let reached = {
                     'Fz0LzxMT1vV': 'Pregnant women completing 4 ANC visits',
                     'i5jVVTm1vI8': 'MOH 731 Syphilis Screened_1st ANC HV02-24',
@@ -247,20 +249,40 @@
                     'uSxBUWnagGg': 'MOH 731 1st ANC Visits HV02-01',
                     'pct05jgGcLt': 'Estimated Number of Pregnant Women'
                 };
+
+                //indicators for missed opportunities
+                let missed = {
+                    'qp8WQXmWtnr': 'Pregnant women completing 4 ANC visits missed opportunities',
+                    'xNTM673ne69': 'ANC Testing for Syphilis Missed Opportunity',
+                    'AlWRnztxhOU': 'Number tested for HIV at ANC Missed Opportunity',
+                    'placeholder1': 0,
+                    'placeholder2': 0
+                }
+                //unlabelled values to plot
                 let reached_values = [];
+                let missed_values = []
             justFetch(url, {})
                 .then(response=>{
                     response.rows.map( row => {
-                            if(row[0] in reached)
+                            if(row[0] in reached) {
                                 reached[row[0]] = parseInt(row[2]);
+                            } else if(row[0] in missed){
+                                missed[row[0]] = parseInt(row[2]);
+                            }
                         }
                     );
-                    console.log(reached);
+
+                    //convert dictionary to array by extracting values only
                     reached_values = Object.keys(reached).map(function (key) {
                         return reached[key];
                     });
+                    missed_values = Object.keys(missed).map(function (key) {
+                        return missed[key];
+                    })
                     console.log(reached_values);
+                    console.log(missed_values);
 
+                    //plot the charts
                     Highcharts.chart('anc', {
                             chart: {
                                 type: 'bar'
@@ -290,7 +312,7 @@
                                 data: [204740, 294044, 342755, 354756, 0]
                             }, {
                                 name: 'Missed Opportunities',
-                                data: [150016, 60712, 12001, 0, 0]
+                                data: missed_values
                             }, {
                                 name: 'Reached Mothers',
                                 data: reached_values
