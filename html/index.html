@@ -265,6 +265,7 @@
                 let unreached_values = [];
             justFetch(url, {})
                 .then(response=>{
+                    console.log(url)
                     response.rows.map( row => {
                             if(row[0] in reached) {
                                 reached[row[0]] = parseInt(row[2]);
@@ -273,7 +274,10 @@
                             }
                         }
                     );
-
+                    
+                    var theorgunit = response.metaData.dimensions.ou[0];
+                    var curorg = response.metaData.items[theorgunit].name;
+                    
                     //convert dictionary to array by extracting values only
                     reached_values = Object.keys(reached).map(function (key) {
                         return reached[key];
@@ -293,7 +297,7 @@
                                 type: 'bar'
                             },
                             title: {
-                                text: 'ANC CASCADE'
+                                text: 'ANC CASCADE --'+curorg
                             },
                             xAxis: {
                                 categories: ['Pregnant women completing 4 ANC visits', 'Testing for Syphilis', 'Number tested for HIV at ANC', 'First ANC Visit', 'Expected Pregnancies']
