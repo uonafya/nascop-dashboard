@@ -2,7 +2,7 @@ const filter_template = `
 
 {{#is_county}}
     <div class="col-md-3 col-sm-3 col-xs-12">
-        <select class="form-control m-r-5 mb-1" id="county-dropdown" name="county" multiple placeholder="Select county" title="Select county">
+        <select class="form-control m-r-5 mb-1" id="county-dropdown" name="county"  placeholder="Select county" title="Select county">
             <!--<option selected="true" disabled="" value="">Select County</option>-->
             <option selected="true" value="HfVjCurKxh2">Kenya</option>
             <option value="vvOK1BxTbet">Baringo County</option>
