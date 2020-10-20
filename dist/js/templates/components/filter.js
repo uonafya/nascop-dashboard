@@ -2,7 +2,7 @@ const filter_template = `
 
 {{#is_county}}
     <div class="col-md-3 col-sm-3 col-xs-12">
-        <select class="form-control m-r-5 mb-1" id="county-dropdown" name="county" multiple placeholder="Select county" title="Select county">
+        <select class="form-control m-r-5 mb-1" id="county-dropdown" name="county"  placeholder="Select county" title="Select county">
             <!--<option selected="true" disabled="" value="">Select County</option>-->
             <option selected="true" value="HfVjCurKxh2">Kenya</option>
             <option value="vvOK1BxTbet">Baringo County</option>
@@ -306,7 +306,7 @@ const getPeBtwnYears = (y1, y2, returntype) => {
 let getDefaultPeriod = () =>{
     let yr = new Date().getFullYear();
     let mn = parseFloat(new Date().getMonth())+1
-    let qt
+    let qt 
     if(mn<4){
         qt = 1   
     }else if(mn>=4 && mn < 7){
@@ -319,6 +319,7 @@ let getDefaultPeriod = () =>{
     for (let c = 1; c <= qt; c++) {
         dp += yr+'Q'+c+';'
     }
+    console.log('hahah',dp)
     return dp
 }
 

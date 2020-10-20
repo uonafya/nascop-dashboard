@@ -62,7 +62,7 @@
                         <div class="col-md-12 p-0" id="loading_target"> </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12" >
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">ANC Cascade</h4>
@@ -188,7 +188,7 @@
                         is_ward:false, 
                         is_facility:false, 
                         is_period:true, 
-                        is_period_range:true}
+                        is_period_range:false}
                     let is_loading = {is_loading: false}
                     let footer_yr = { yr: new Date().getFullYear()}
                     let page_status = {title: '', message: '', type: 'info', hidden: true} //type: info, success, danger
@@ -219,16 +219,17 @@
                 if(prop && prop.ou){
                     org_unit = prop.ou
                 }
-                let prd = getDefaultPeriod()
+                let prd = `THIS_YEAR`
                 if(prop && prop.pe){
-                    prd = getQuartersInYear(prop.pe)
+                    prd = prop.pe
                 }
-                if(prop && prop.pe_to){
-                    prd = getPeBtwnYears(prop.pe, prop.pe_to, 'quarters')
-                }
+                // if(prop && prop.pe_to){
+                //     prd = getPeBtwnYears(prop.pe, prop.pe_to, 'quarters')
+                // }
                 let ouFilterType = window.sessionStorage.getItem("ouFilterType") || "national"
                 
-                let ancascade = `https://hiskenya.org/api/26/analytics.json?dimension=ou:${org_unit}&dimension=dx:xNTM673ne69;kU5ew70I7kj;vlme3PThHl1;AlWRnztxhOU;VsRrzNMda22;qp8WQXmWtnr;ArG6zbCMBr2;pct05jgGcLt;uSxBUWnagGg;i5jVVTm1vI8;Fz0LzxMT1vV&filter=pe:THIS_YEAR&displayProperty=NAME`
+
+                let ancascade = `https://hiskenya.org/api/26/analytics.json?dimension=ou:${org_unit}&dimension=dx:xNTM673ne69;kU5ew70I7kj;vlme3PThHl1;AlWRnztxhOU;VsRrzNMda22;qp8WQXmWtnr;ArG6zbCMBr2;pct05jgGcLt;uSxBUWnagGg;i5jVVTm1vI8;Fz0LzxMT1vV&filter=pe:${prd}&displayProperty=NAME`
                 
                
             getAnc(ancascade)
