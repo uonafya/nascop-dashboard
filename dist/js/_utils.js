@@ -155,6 +155,7 @@ const munchHash = (hash) => {
         let corr_val = decodeURIComponent(val)
         tt_[t] = corr_val
     })
+
     return tt_
 };
 
