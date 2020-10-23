@@ -230,7 +230,7 @@
                 let ancascade = `https://hiskenya.org/api/26/analytics.json?dimension=ou:${org_unit}&dimension=dx:xNTM673ne69;kU5ew70I7kj;vlme3PThHl1;AlWRnztxhOU;VsRrzNMda22;qp8WQXmWtnr;ArG6zbCMBr2;pct05jgGcLt;uSxBUWnagGg;i5jVVTm1vI8;Fz0LzxMT1vV&filter=pe:${prd}&displayProperty=NAME`
                 
                
-            getAnc(ancascade)
+            getAnc(ancascade,prd)
             getMaternal()
             getInfant()
 
@@ -238,7 +238,7 @@
             
         }
 
-            function getAnc(url){
+            function getAnc(url,prd){
                 //dictionaries used to maintain order of the values
                 //indicators for reached anc
                 let reached = {
@@ -274,6 +274,9 @@
                     
                     var theorgunit = response.metaData.dimensions.ou[0];
                     var curorg = response.metaData.items[theorgunit].name;
+
+                    
+                    console.log(response.metaData.items[response.metaData.dimensions.pe[0]].name)
                     
                     //convert dictionary to array by extracting values only
                     reached_values = Object.keys(reached).map(function (key) {
@@ -294,10 +297,10 @@
                                 type: 'bar'
                             },
                             title: {
-                                text: 'ANC CASCADE --'+curorg
+                                text: response.metaData.items[response.metaData.dimensions.pe[0]].name+'--ANC CASCADE --'+curorg
                             },
                             xAxis: {
-                                categories: ['Pregnant women completing 4 ANC visits', 'Testing for Syphilis', 'Number tested for HIV at ANC', 'First ANC Visit', 'Expected Pregnancies']
+                                categories: ['Pregnant women completing 4 ANC visit', 'Testing for Syphilis', 'Number tested for HIV at ANC', 'First ANC Visit', 'Expected Pregnancies']
                             },
                             yAxis: {
                                 min: 0,
@@ -309,10 +312,16 @@
                                 reversed: true
                             },
                             plotOptions: {
-                                series: {
-                                    stacking: 'normal'
-                                }
-                            },
+                                    series: {
+                                        dataLabels: {
+                                            enabled: true,
+                                            align: 'center',
+                                            color: '#FFFFFF'
+                                        },                                        
+                                        stacking: 'normal'
+                                    
+                                    }
+                                },
                             series: [{
                                 name: 'Unreached Mothers',
                                 data: unreached_values
@@ -349,10 +358,16 @@
                                 reversed: true
                             },
                             plotOptions: {
-                                series: {
-                                    stacking: 'normal'
-                                }
-                            },
+                                    series: {
+                                        dataLabels: {
+                                            enabled: true,
+                                            align: 'center',
+                                            color: '#FFFFFF'
+                                        },
+                                        stacking: 'normal'
+                                    
+                                    }
+                                },
                             series: [{
                                 name: 'Unreached Mothers',
                                 data: [-110, -110, -110, -110, 0]
@@ -388,10 +403,16 @@
                                 reversed: true
                             },
                             plotOptions: {
-                                series: {
-                                    stacking: 'normal'
-                                }
-                            },
+                                    series: {
+                                        dataLabels: {
+                                            enabled: true,
+                                            align: 'center',
+                                            color: '#FFFFFF'
+                                        },
+                                        stacking: 'normal'
+                                    
+                                    }
+                                },
                             series: [{
                                 name: 'Unreached Infants',
                                 data: [0, 0, -110, -110, -110,0]
