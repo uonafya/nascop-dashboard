@@ -230,12 +230,11 @@
                 console.log('richie1',finalpe)
                 
 
-                let ancascade = `https://hiskenya.org/api/26/analytics.json?dimension=ou:${org_unit}&dimension=dx:xNTM673ne69;kU5ew70I7kj;vlme3PThHl1;AlWRnztxhOU;VsRrzNMda22;qp8WQXmWtnr;ArG6zbCMBr2;pct05jgGcLt;uSxBUWnagGg;i5jVVTm1vI8;Fz0LzxMT1vV&filter=pe:${finalpe}&displayProperty=NAME`
-
-            getAnc(ancascade)
-            getMaternal()
-            getInfant()
-
+                let ancascade = `https://hiskenya.org/api/26/analytics.json?dimension=ou:${org_unit}&dimension=dx:Fz0LzxMT1vV;uSxBUWnagGg;i5jVVTm1vI8;pct05jgGcLt;xNTM673ne69;KsxPBOVAyjJ;ivtLMB7qdKg;xvUt174iyYS;kU5ew70I7kj;ZH8BGmU9SHJ;vlme3PThHl1;AlWRnztxhOU;KMy83Jn1QgO;VsRrzNMda22;cmeMfuPL3VL;qp8WQXmWtnr;MHmKiukySbZ;ArG6zbCMBr2;RsYvCg0aeuZ&filter=pe:${finalpe}&displayProperty=NAME`
+                // let data = fetchdata(ancascade)
+                getAnc(ancascade)
+                getMaternal(ancascade)
+                // getInfant()
 
             
         }
@@ -248,7 +247,8 @@
                     'uSxBUWnagGg': 'MOH 731 1st ANC Visits HV02-01',
                     'vlme3PThHl1': 'Number tested for HIV at ANC',
                     'i5jVVTm1vI8': 'MOH 731 Syphilis Screened_1st ANC HV02-24',
-                    'Fz0LzxMT1vV': 'Pregnant women completing 4 ANC visits'
+                    'Fz0LzxMT1vV': 'Pregnant women completing 4 ANC visits',
+                    'KsxPBOVAyjJ': 'Delivery to HIV+ Mothers'
                 };
 
                 //indicators for missed opportunities
@@ -257,7 +257,8 @@
                     'placeholder1': 0,
                     'AlWRnztxhOU': 'Number tested for HIV at ANC Missed Opportunity',
                     'xNTM673ne69': 'ANC Testing for Syphilis Missed Opportunity',
-                    'qp8WQXmWtnr': 'Pregnant women completing 4 ANC visits missed opportunities'
+                    'qp8WQXmWtnr': 'Pregnant women completing 4 ANC visits missed opportunities',
+                    'ivtLMB7qdKg': 'Delivery to HIV+ Mothers Missed Opportunity'
    
                 }
                 //unlabelled values to plot
@@ -274,10 +275,10 @@
                             }
                         }
                     );
-                    
+
                     var theorgunit = response.metaData.dimensions.ou[0];
                     var curorg = response.metaData.items[theorgunit].name;
-                    
+
                     //convert dictionary to array by extracting values only
                     reached_values = Object.keys(reached).map(function (key) {
                         return reached[key];
@@ -287,7 +288,7 @@
                     });
 
                     const unreached = reached_values[0] - reached_values[1];
-                    unreached_values = [0, unreached, unreached, unreached, unreached];
+                    unreached_values = [0, unreached, unreached, unreached, unreached,unreached];
 
                     //plot the charts
                     Highcharts.chart('anc', {
@@ -315,9 +316,9 @@
                                             enabled: true,
                                             align: 'center',
                                             color: '#FFFFFF'
-                                        },                                        
+                                        },
                                         stacking: 'normal'
-                                    
+
                                     }
                                 },
                             series: [{
@@ -331,26 +332,26 @@
                                 data: reached_values
                             }]
                         });
-                
+
                 });
             }
 
             function getMaternal(url){
                 let reached = {
-                    'pct05jgGcLt': 'Estimated Number of Pregnant Women',
-                    'uSxBUWnagGg': 'MOH 731 1st ANC Visits HV02-01',
-                    'vlme3PThHl1': 'Number tested for HIV at ANC',
-                    'i5jVVTm1vI8': 'MOH 731 Syphilis Screened_1st ANC HV02-24',
-                    'Fz0LzxMT1vV': 'Pregnant women completing 4 ANC visits'
+                    'ZH8BGmU9SHJ': 'Need for PMTCT',
+                    'VsRrzNMda22': 'PMTCT Total Positive',
+                    'ArG6zbCMBr2': 'Total Maternal HAART',
+                    'KMy83Jn1QgO': 'PMTCT Infant Prophylaxis',
+                    'KsxPBOVAyjJ': 'Delivery to HIV+ Mothers'
                 };
 
                 //indicators for missed opportunities
                 let missed = {
                     'placeholder2': 0,
                     'placeholder1': 0,
-                    'AlWRnztxhOU': 'Number tested for HIV at ANC Missed Opportunity',
-                    'xNTM673ne69': 'ANC Testing for Syphilis Missed Opportunity',
-                    'qp8WQXmWtnr': 'Pregnant women completing 4 ANC visits missed opportunities'
+                    'kU5ew70I7kj': 'Maternal HAART Missed Opportunities',
+                    'xvUt174iyYS': 'Infant Prophylaxis Missed Opportunity',
+                    'ivtLMB7qdKg': 'Delivery to HIV+ Mothers Missed Opportunity'
    
                 }
                 //unlabelled values to plot
@@ -384,7 +385,7 @@
                     });
 
                     const unreached = reached_values[0] - reached_values[1];
-                    unreached_values = [0, unreached, unreached, unreached, unreached];
+                    unreached_values = [0, reached_values[0] - reached_values[1], unreached, unreached, unreached];
                 Highcharts.chart('Maternal', {
                             chart: {
                                 type: 'bar'
@@ -393,7 +394,7 @@
                                 text: 'Maternal HIV Cascade'
                             },
                             xAxis: {
-                                categories: ['Neonatal PMTCT', 'PMTCT Positives', 'Maternal HAART', 'Infant Prophylaxis','Delivery to HIV+ Mothers' ]
+                                categories: ['Need for PMTCT', 'PMTCT Positives', 'Maternal HAART', 'Infant Prophylaxis','Delivery to HIV+ Mothers' ]
                             },
                             yAxis: {
                                 min: 0,
@@ -417,14 +418,14 @@
                                 },
                             series: [{
                                 name: 'Unreached Mothers',
-                                data: [0, -110, -110, -110, -110]
+                                data: unreached_values
                             }, {
                                 name: 'Missed Opportunities',
-                                data: [0,0,5934,2322,7754]
+                                data: missed_values
                             }, {
                                 
                                 name: 'Reached Mothers',
-                                data: [17374,17484,11550, 15162,9730 ]
+                                data: reached_values
                             }]
                         });
                 

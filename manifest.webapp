@@ -1,6 +1,6 @@
 {
     "version": "1.0.0",
-    "name": "Nascop Dashboard",
+    "name": "NASCOP HIV Cascades Dashboard",
     "description": "An App to Visualize Nascop indicators",
     "launch_path": "html/index.html",
     "appType": "APP",
