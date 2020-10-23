@@ -84,23 +84,27 @@ const filter_template = `
         <div class="row">
             <div class="col-md-6">
                 <div class="input-group">
-                    <div class="checkbox m-l-10 m-r-10">
-                        <label>
-                            <input class="form-control" type="checkbox" value="is_range" id="is_range" name="is_range" checked>
-                            Range
-                        </label>
-                    </div>
+                   
 
                     <select class="form-control yearsfilt" id="period-dropdownFrom">
                         <option value="" disabled selected>Year {{#is_period_range}} from {{/is_period_range}}</option>
                     </select>
                     
-                    <select class="form-control" id="period-dropdownFromQs" disabled>
+                    <select class="form-control" multiple id="period-dropdownFromQs" disabled>
                         <option value="" selected>All year</option>
-                        <option value="1" >Q1 (Jan-Mar)</option>
-                        <option value="2" >Q2 (Apr-Jun)</option>
-                        <option value="3" >Q3 (Jul-Sept)</option>
-                        <option value="4" >Q4 (Oct-Dec)</option>
+                        <option value="01" >January</option>
+                        <option value="02" >February</option>
+                        <option value="03" >March</option>
+                        <option value="04" >April</option>
+                        <option value="05" >May</option>
+                        <option value="06" >June</option>
+                        <option value="07" >July</option>
+                        <option value="08" >August</option>
+                        <option value="09" >September</option>
+                        <option value="10" >October</option>
+                        <option value="11" >November</option>
+                        <option value="12" >December</option>
+                        
                     </select>
                 </div>
             </div>
@@ -112,11 +116,19 @@ const filter_template = `
                         </select>
                         
                         <select class="form-control" id="period-dropdownToQs" disabled>
-                            <option value="" selected>All year</option>
-                            <option value="1" >Q1 (Jan-Mar)</option>
-                            <option value="2" >Q2 (Apr-Jun)</option>
-                            <option value="3" >Q3 (Jul-Sept)</option>
-                            <option value="4" >Q4 (Oct-Dec)</option>
+                        <option value="" selected>All year</option>
+                        <option value="01" >January</option>
+                        <option value="02" >February</option>
+                        <option value="03" >March</option>
+                        <option value="04" >April</option>
+                        <option value="05" >May</option>
+                        <option value="06" >June</option>
+                        <option value="07" >July</option>
+                        <option value="08" >August</option>
+                        <option value="09" >September</option>
+                        <option value="10" >October</option>
+                        <option value="11" >November</option>
+                        <option value="12" >December</option>
                         </select>
                     </div> 
                 </div> 
@@ -177,7 +189,14 @@ $(document).ready(function () {
         sessionStorage.setItem("periodIsQuarters", true)
         let p_val = $("#period-dropdownFrom").val()
         let v_al = $(this).val();
-        let v_alq = p_val+"Q"+v_al //""
+        let v_alq = []
+        v_al.forEach(data => {
+            v_al1= $(this).val();
+            let finalpe = p_val+data
+            v_alq.push(finalpe)
+        });
+        
+
         
         // if(sessionStorage.getItem("isPeriodRange") === "false" || !sessionStorage.getItem("isPeriodRange") ){
         //     v_alq = p_val+"Q"+v_al
@@ -207,7 +226,7 @@ $(document).ready(function () {
         
         let v_al_fr = $('#period-dropdownFrom').val();
         let v_al_fr_qs = $('#period-dropdownFromQs').val();
-        let v_alf = v_al_fr+"Q"+v_al_fr_qs //""
+        let v_alf = v_al_fr+v_al_fr_qs //""
         // if(v_al_fr_qs != null && v_al_fr_qs != ""){
         //     for (let d = 1; d <= parseFloat(v_al_fr_qs); d++) {
         //         v_alf += v_al_fr+"Q"+d+";"
@@ -215,7 +234,8 @@ $(document).ready(function () {
         //     v_alf = v_alf.substr(0,v_alf.length-1)
         // }
 
-        let v_alq = p_val+"Q"+v_al //""
+        let v_alq = p_val+v_al //""
+        console.log('kenyaaaa',v_alq)
         // if(v_al != null && v_al != ""){
         //     for (let d = 1; d <= parseFloat(v_al); d++) {
         //         v_alq += p_val+"Q"+d+";"

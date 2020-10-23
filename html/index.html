@@ -225,12 +225,14 @@
                 }
 
                 let ouFilterType = window.sessionStorage.getItem("ouFilterType") || "national"
+                var finalpe =prd.replace(/,/g, ';');
+
+                console.log('richie1',finalpe)
                 
 
-                let ancascade = `https://hiskenya.org/api/26/analytics.json?dimension=ou:${org_unit}&dimension=dx:xNTM673ne69;kU5ew70I7kj;vlme3PThHl1;AlWRnztxhOU;VsRrzNMda22;qp8WQXmWtnr;ArG6zbCMBr2;pct05jgGcLt;uSxBUWnagGg;i5jVVTm1vI8;Fz0LzxMT1vV&filter=pe:${prd}&displayProperty=NAME`
-                
-               
-            getAnc(ancascade,prd)
+                let ancascade = `https://hiskenya.org/api/26/analytics.json?dimension=ou:${org_unit}&dimension=dx:xNTM673ne69;kU5ew70I7kj;vlme3PThHl1;AlWRnztxhOU;VsRrzNMda22;qp8WQXmWtnr;ArG6zbCMBr2;pct05jgGcLt;uSxBUWnagGg;i5jVVTm1vI8;Fz0LzxMT1vV&filter=pe:${finalpe}&displayProperty=NAME`
+
+            getAnc(ancascade)
             getMaternal()
             getInfant()
 
@@ -238,24 +240,25 @@
             
         }
 
-            function getAnc(url,prd){
+            function getAnc(url){
                 //dictionaries used to maintain order of the values
                 //indicators for reached anc
                 let reached = {
-                    'Fz0LzxMT1vV': 'Pregnant women completing 4 ANC visits',
-                    'i5jVVTm1vI8': 'MOH 731 Syphilis Screened_1st ANC HV02-24',
-                    'vlme3PThHl1': 'Number tested for HIV at ANC',
+                    'pct05jgGcLt': 'Estimated Number of Pregnant Women',
                     'uSxBUWnagGg': 'MOH 731 1st ANC Visits HV02-01',
-                    'pct05jgGcLt': 'Estimated Number of Pregnant Women'
+                    'vlme3PThHl1': 'Number tested for HIV at ANC',
+                    'i5jVVTm1vI8': 'MOH 731 Syphilis Screened_1st ANC HV02-24',
+                    'Fz0LzxMT1vV': 'Pregnant women completing 4 ANC visits'
                 };
 
                 //indicators for missed opportunities
                 let missed = {
-                    'qp8WQXmWtnr': 'Pregnant women completing 4 ANC visits missed opportunities',
-                    'xNTM673ne69': 'ANC Testing for Syphilis Missed Opportunity',
-                    'AlWRnztxhOU': 'Number tested for HIV at ANC Missed Opportunity',
+                    'placeholder2': 0,
                     'placeholder1': 0,
-                    'placeholder2': 0
+                    'AlWRnztxhOU': 'Number tested for HIV at ANC Missed Opportunity',
+                    'xNTM673ne69': 'ANC Testing for Syphilis Missed Opportunity',
+                    'qp8WQXmWtnr': 'Pregnant women completing 4 ANC visits missed opportunities'
+   
                 }
                 //unlabelled values to plot
                 let reached_values = [];
@@ -274,9 +277,6 @@
                     
                     var theorgunit = response.metaData.dimensions.ou[0];
                     var curorg = response.metaData.items[theorgunit].name;
-
-                    
-                    console.log(response.metaData.items[response.metaData.dimensions.pe[0]].name)
                     
                     //convert dictionary to array by extracting values only
                     reached_values = Object.keys(reached).map(function (key) {
@@ -286,10 +286,8 @@
                         return missed[key];
                     });
 
-                    const unreached = reached_values[4] - reached_values[3];
-                    unreached_values = [unreached, unreached, unreached, unreached, 0];
-                    console.log(reached_values);
-                    console.log(missed_values);
+                    const unreached = reached_values[0] - reached_values[1];
+                    unreached_values = [0, unreached, unreached, unreached, unreached];
 
                     //plot the charts
                     Highcharts.chart('anc', {
@@ -300,12 +298,12 @@
                                 text: response.metaData.items[response.metaData.dimensions.pe[0]].name+'--ANC CASCADE --'+curorg
                             },
                             xAxis: {
-                                categories: ['Pregnant women completing 4 ANC visit', 'Testing for Syphilis', 'Number tested for HIV at ANC', 'First ANC Visit', 'Expected Pregnancies']
+                                categories: ['Expected Pregnancies', 'First ANC Visit','Known HIV status at ANC','Testing for Syphilis', 'Pregnant women completing 4 ANC visit', 'Skilled Deliveries'  ]
                             },
                             yAxis: {
                                 min: 0,
                                 title: {
-                                    text: 'Population Number'
+                                    text: 'Maternal Population'
                                 }
                             },
                             legend: {
@@ -337,7 +335,56 @@
                 });
             }
 
-            function getMaternal(){
+            function getMaternal(url){
+                let reached = {
+                    'pct05jgGcLt': 'Estimated Number of Pregnant Women',
+                    'uSxBUWnagGg': 'MOH 731 1st ANC Visits HV02-01',
+                    'vlme3PThHl1': 'Number tested for HIV at ANC',
+                    'i5jVVTm1vI8': 'MOH 731 Syphilis Screened_1st ANC HV02-24',
+                    'Fz0LzxMT1vV': 'Pregnant women completing 4 ANC visits'
+                };
+
+                //indicators for missed opportunities
+                let missed = {
+                    'placeholder2': 0,
+                    'placeholder1': 0,
+                    'AlWRnztxhOU': 'Number tested for HIV at ANC Missed Opportunity',
+                    'xNTM673ne69': 'ANC Testing for Syphilis Missed Opportunity',
+                    'qp8WQXmWtnr': 'Pregnant women completing 4 ANC visits missed opportunities'
+   
+                }
+                //unlabelled values to plot
+                let reached_values = [];
+                let missed_values = [];
+                let unreached_values = [];
+            justFetch(url, {})
+                .then(response=>{
+                    console.log(url)
+                    response.rows.map( row => {
+                            if(row[0] in reached) {
+                                reached[row[0]] = parseInt(row[2]);
+                            } else if(row[0] in missed){
+                                missed[row[0]] = parseInt(row[2]);
+                            }
+                        }
+                    );
+                    
+                    var theorgunit = response.metaData.dimensions.ou[0];
+                    var curorg = response.metaData.items[theorgunit].name;
+
+                    
+                    console.log(response.metaData.items[response.metaData.dimensions.pe[0]].name)
+                    
+                    //convert dictionary to array by extracting values only
+                    reached_values = Object.keys(reached).map(function (key) {
+                        return reached[key];
+                    });
+                    missed_values = Object.keys(missed).map(function (key) {
+                        return missed[key];
+                    });
+
+                    const unreached = reached_values[0] - reached_values[1];
+                    unreached_values = [0, unreached, unreached, unreached, unreached];
                 Highcharts.chart('Maternal', {
                             chart: {
                                 type: 'bar'
@@ -346,12 +393,12 @@
                                 text: 'Maternal HIV Cascade'
                             },
                             xAxis: {
-                                categories: ['Delivery from HIV+ mothers', 'Infant Prophylaxis', 'Maternal HAART', 'PMTCT positive', 'In need of PMTCT']
+                                categories: ['Neonatal PMTCT', 'PMTCT Positives', 'Maternal HAART', 'Infant Prophylaxis','Delivery to HIV+ Mothers' ]
                             },
                             yAxis: {
                                 min: 0,
                                 title: {
-                                    text: 'Population Number'
+                                    text: 'Maternal Population'
                                 }
                             },
                             legend: {
@@ -370,19 +417,70 @@
                                 },
                             series: [{
                                 name: 'Unreached Mothers',
-                                data: [-110, -110, -110, -110, 0]
+                                data: [0, -110, -110, -110, -110]
                             }, {
                                 name: 'Missed Opportunities',
-                                data: [7754, 2322, 5934, 0, 0]
+                                data: [0,0,5934,2322,7754]
                             }, {
                                 
                                 name: 'Reached Mothers',
-                                data: [9730, 15162, 11550, 17484, 17374]
+                                data: [17374,17484,11550, 15162,9730 ]
                             }]
                         });
+                
+            });
                                         
             }
-            function getInfant(){
+            function getInfant(url){
+                let reached = {
+                    'pct05jgGcLt': 'Estimated Number of Pregnant Women',
+                    'uSxBUWnagGg': 'MOH 731 1st ANC Visits HV02-01',
+                    'vlme3PThHl1': 'Number tested for HIV at ANC',
+                    'i5jVVTm1vI8': 'MOH 731 Syphilis Screened_1st ANC HV02-24',
+                    'Fz0LzxMT1vV': 'Pregnant women completing 4 ANC visits'
+                };
+
+                //indicators for missed opportunities
+                let missed = {
+                    'placeholder2': 0,
+                    'placeholder1': 0,
+                    'AlWRnztxhOU': 'Number tested for HIV at ANC Missed Opportunity',
+                    'xNTM673ne69': 'ANC Testing for Syphilis Missed Opportunity',
+                    'qp8WQXmWtnr': 'Pregnant women completing 4 ANC visits missed opportunities'
+   
+                }
+                //unlabelled values to plot
+                let reached_values = [];
+                let missed_values = [];
+                let unreached_values = [];
+            justFetch(url, {})
+                .then(response=>{
+                    console.log(url)
+                    response.rows.map( row => {
+                            if(row[0] in reached) {
+                                reached[row[0]] = parseInt(row[2]);
+                            } else if(row[0] in missed){
+                                missed[row[0]] = parseInt(row[2]);
+                            }
+                        }
+                    );
+                    
+                    var theorgunit = response.metaData.dimensions.ou[0];
+                    var curorg = response.metaData.items[theorgunit].name;
+
+                    
+                    console.log(response.metaData.items[response.metaData.dimensions.pe[0]].name)
+                    
+                    //convert dictionary to array by extracting values only
+                    reached_values = Object.keys(reached).map(function (key) {
+                        return reached[key];
+                    });
+                    missed_values = Object.keys(missed).map(function (key) {
+                        return missed[key];
+                    });
+
+                    const unreached = reached_values[0] - reached_values[1];
+                    unreached_values = [0, unreached, unreached, unreached, unreached];
                 Highcharts.chart('Infant', {
                             chart: {
                                 type: 'bar'
@@ -391,12 +489,12 @@
                                 text: 'Infant HIV Cascade'
                             },
                             xAxis: {
-                                categories: ['Under 1 starting ART', 'PCR positive', 'PCR within two months', 'First PCR done', 'PMTCT positive','In need of PMTCT']
+                                categories: ['Neonatal PMTCT','Positive Pg & Br', '1st PCR', 'PCR Within Two Months', 'PCR Positived', 'Under 1 Starting ART']
                             },
                             yAxis: {
                                 min: 0,
                                 title: {
-                                    text: 'Population Number'
+                                    text: 'Maternal Population'
                                 }
                             },
                             legend: {
@@ -415,16 +513,18 @@
                                 },
                             series: [{
                                 name: 'Unreached Infants',
-                                data: [0, 0, -110, -110, -110,0]
+                                data: [0, 0,0,-110, -110, -110]
                                 
                             }, {
                                 name: 'Missed Opportunity',
-                                data: [167, 0, 6426, 1956, 0, 0]
+                                data: [0,0,1956,6426,0,167]
                             }, {
                                 name: 'Reached Infants',
-                                data: [291, 458, 11058, 15528, 17484, 17374]
+                                data: [17374,17484,15528,11058,458,291]
                             }]
                         });
+                
+            });
                                         
             }
         </script>
