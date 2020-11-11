@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <!-- Favicon icon -->
+        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/nascop-logo.png" />
+        <title>
+           Home | Nascop Dashboard
+        </title>
+        <!-- Custom CSS -->
+        <link rel="stylesheet" type="text/css" href="../assets/extra-libs/multicheck/multicheck.css" />
+        <link href="../assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet" />
+        <link href="../assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" />
+        <link href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+        <link href="../dist/css/datatables/buttons.dataTables.min.css" rel="stylesheet" />
+        <link href="../dist/css/datatables/jquery.dataTables.min.css" rel="stylesheet" />
+        <link href="../assets/extra-libs/monthpicker/MonthPicker.css" rel="stylesheet" />
+        <link href="../assets/extra-libs/monthpicker/jquery-ui.css" rel="stylesheet" />
+        <link href="../assets/libs/select2/select2.min.css" rel="stylesheet" />
+        
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highcharts/8.1.1/css/highcharts.min.css">
+        <link href="../dist/css/style.min.css" rel="stylesheet" />
+        <link href="../dist/css/custom.css" rel="stylesheet" />
+        <link href="../dist/css/main.css" rel="stylesheet" />
+        
+    </head>
+
+    <body onload="renderAll(); window.fetchData();">
+        <div class="preloader">
+            <div class="lds-ripple">
+                <div class="lds-pos"></div>
+                <div class="lds-pos"></div>
+            </div>
+        </div>
+        <div id="main-wrapper">
+            <header class="topbar" data-navbarbg="skin5" id="header_target"></header>
+            <aside class="left-sidebar" data-sidebarbg="skin5">
+                <div class="scroll-sidebar">
+                    <nav class="sidebar-nav" id="nav_target"></nav>
+                </div>
+            </aside>
+            <div class="page-wrapper">
+                <div class="page-breadcrumb">
+                    <div class="row">
+                        <div class="col-12 d-flex no-block align-items-center" id="filter_target">
+                            <!-- <small class="text-bold">Filter:</small> -->
+                                <!-- <div class="col-md-12 col-sm-12 col-xs-12">
+                                </div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12 p-0" id="status_target"> </div>
+                        <div class="col-md-12 p-0" id="loading_target"> </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" >
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Kenya Adult Coverage Cascade</h4>
+                                    <figure class="highcharts-figure">                                        
+                                        <div id="adult"></div>
+                                        <p class="highcharts-description">
+                                        </p>
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Kenya Child Coverage Cascade</h4>
+                                    <figure class="highcharts-figure">                                        
+                                        <div id="child"></div>
+                                        <p class="highcharts-description">
+                                        </p>
+                                    </figure>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Kenya Adolesent Coverage Cascade</h4>
+                                    <figure class="highcharts-figure">                                        
+                                        <div id="adolesent"></div>
+                                        <p class="highcharts-description">
+                                        </p>
+                                    </figure>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Kenya Overall Coverage Cascade</h4>
+                                    <figure class="highcharts-figure">                                        
+                                        <div id="overall"></div>
+                                        <p class="highcharts-description">
+                                        </p>
+                                    </figure>                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Kenya male Coverage Cascade</h4>
+                                    <figure class="highcharts-figure">                                        
+                                        <div id="male"></div>
+                                        <p class="highcharts-description">
+                                        </p>
+                                    </figure>                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Kenya female Coverage Cascade</h4>
+                                    <figure class="highcharts-figure">                                        
+                                        <div id="female"></div>
+                                        <p class="highcharts-description">
+                                        </p>
+                                    </figure>                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Kenya Young Adult Coverage Cascade</h4>
+                                    <figure class="highcharts-figure">                                        
+                                        <div id="yadult"></div>
+                                        <p class="highcharts-description">
+                                        </p>
+                                    </figure>                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <!-- <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">% Congruence between sources of immunization data between : Immunisation register vs. DHIS2</h4>
+                                    <div class="graph" id="immunizationmr">
+                                        <p class="card-text">tables Comparing counties , subcounties and quaters. In this case lets have one table that will have all discrepancy between sources of immunization data</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                                            
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer_target" class="p-0 m-0 w-100"></div>
+        
+        <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+        <script src="../assets/libs/select2/select2.min.js"></script>
+        <script src="../assets/libs/popper.js/dist/umd/popper.min.js"></script>
+        <script src="../assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="../assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+        <script src="../dist/js/sidebarmenu.js"></script>
+        <script src="../dist/js/custom.js"></script>
+        <script src="../assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
+        <script src="../assets/extra-libs/multicheck/jquery.multicheck.js"></script>
+        <script src="../assets/extra-libs/DataTables/datatables.min.js"></script>
+        <script src="../assets/extra-libs/DataTables/dataTables.buttons.min.js"></script>
+        <script src="../assets/extra-libs/DataTables/buttons.flash.min.js"></script>
+        <script src="../assets/extra-libs/jszip/jszip.min.js"></script>
+        <script src="../assets/extra-libs/pdfmake/pdfmake.min.js"></script>
+        <script src="../assets/extra-libs/pdfmake/vfs_fonts.js"></script>
+        <script src="../assets/extra-libs/DataTables/buttons.html5.min.js"></script>
+        <script src="../assets/extra-libs/DataTables/buttons.print.min.js"></script>
+
+        <!-- *********** <MonthPicker ************** -->
+        <script src="../assets/extra-libs/monthpicker/jquery-migrate-3.0.1.min.js"></script>
+        <script src="../assets/extra-libs/monthpicker/jquery.maskedinput.min.js"></script>
+        <script src="../assets/extra-libs/monthpicker/jquery-ui.min.js"></script>
+        <script src="../assets/extra-libs/monthpicker/MonthPicker.js"></script>
+        <!-- *********** MonthPicker/> ************** -->
+
+        <!-- *********** <WeekPicker ************** -->
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.26.0/moment.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+        <script src="../dist/js/weekpicker.js"></script>
+        <!-- *********** WeekPicker/> ************** -->
+        
+        <!-- *********** <Highcharts ************** -->
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/8.1.1/es-modules/highcharts.src.min.js"></script>-->
+		<script src="https://code.highcharts.com/highcharts.js"></script>
+		<script src="https://code.highcharts.com/modules/exporting.js"></script>		
+		<script src="https://code.highcharts.com/modules/export-data.js"></script>
+		<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+        <!-- *********** Highcharts/> ************** -->
+
+
+
+
+        <!-- TEMPLATING -->
+        <script src="../dist/js/templates/mustache.js"></script>
+
+            <!-- templates -->
+            <!-- <script id="header_template" type="x-tmpl-mustache">
+                //html here
+            </script> -->
+            <script src="../dist/js/templates/components/footer.js"></script>
+            <script src="../dist/js/templates/components/header.js"></script>
+            <script src="../dist/js/templates/components/nav.js"></script>
+            <script src="../dist/js/templates/components/filter.js"></script>
+            <script src="../dist/js/templates/components/loading.js"></script>
+            <script src="../dist/js/templates/components/status.js"></script>
+            <!-- templates -->
+
+            <!-- renders -->
+            <script src="../dist/js/templates/renders.js"></script>
+            <!-- renders -->
+
+            <!-- render Fn -->
+            <script>
+                function renderAll() {
+                    let page_title = {title: 'NASCOP 90 90 90 Cascades'}
+                    let page_filters = {
+                        is_county:true, 
+                        is_subcounty:false, 
+                        is_ward:false, 
+                        is_facility:false, 
+                        is_period:true, 
+                        is_period_range:false}
+                    let is_loading = {is_loading: false}
+                    let footer_yr = { yr: new Date().getFullYear()}
+                    let page_status = {title: '', message: '', type: 'info', hidden: true} //type: info, success, danger
+
+                    renderNav()
+                    renderHeader(page_title)
+                    renderFooter(footer_yr)
+                    renderLoader(is_loading)
+                    renderFilter(page_filters)
+                    renderStatus(page_status)
+                }
+            </script>
+            <!-- render Fn -->
+        <!-- TEMPLATING -->
+
+
+        <script src="../dist/js/_utils.js"></script>
+
+
+        
+        
+        <!-- ++++++++++++++++++++++++ PAGE DATA LOGIC ++++++++++++++++++++++++ -->
+        <script>
+            window.fetchData = (prop) => {
+                // let org_unit = window.sessionStorage.getItem('ess_ou') || "HfVjCurKxh2"
+                let org_unit = "HfVjCurKxh2"
+
+                if(prop && prop.ou){
+                    org_unit = prop.ou
+                }
+                let prd = `THIS_YEAR`
+                if(prop && prop.pe){
+                    prd = prop.pe
+                }
+
+                let ouFilterType = window.sessionStorage.getItem("ouFilterType") || "national"
+                var finalpe =prd.replace(/,/g, ';');
+                
+
+                let ancascade = `https://hiskenya.org/api/26/analytics.json?dimension=ou:${org_unit}&dimension=dx:xNTM673ne69;kU5ew70I7kj;vlme3PThHl1;AlWRnztxhOU;VsRrzNMda22;qp8WQXmWtnr;ArG6zbCMBr2;pct05jgGcLt;uSxBUWnagGg;i5jVVTm1vI8;Fz0LzxMT1vV&filter=pe:${finalpe}&displayProperty=NAME`
+
+           getAdult()
+           getChild()
+           getAdolesent()
+           getOverall()
+           getMale()
+           getFemale()
+           getYadult()
+
+            
+        }
+        function getAdult(){
+            
+
+                Highcharts.chart('adult', {
+                                chart: {
+                                    type: 'column'
+                                },
+                                title: {
+                                    text: 'Kenya Adult Coverage Cascade'
+                                },
+                                xAxis: {
+                                    categories: ['AHLIV', 'Adults Currently in Care', 'Adults Currently in ART', 'Adults Supressed']
+                                },
+                                yAxis: {
+                                    title: {
+                                        text: 'Number'
+                                    },
+                                    stackLabels: {
+                                        enabled: true,
+                                        style: {
+                                            fontWeight: 'bold',
+                                            color: ( // theme
+                                                Highcharts.defaultOptions.title.style &&
+                                                Highcharts.defaultOptions.title.style.color
+                                            ) || 'gray'
+                                        },
+                                        formatter: function () {
+                                            var diff = this.points[0][1]-this.points[0][0]
+                                                return Math.round(100 - (100 * diff / this.total)) + '%';
+                                            }
+                                    }
+                                },
+                                legend: {
+                                    align: 'center',
+                                    verticalAlign: 'bottom',
+                                    y: 20,
+                                    floating: true,
+                                    backgroundColor:
+                                        Highcharts.defaultOptions.legend.backgroundColor || 'white',
+                                    borderColor: '#CCC',
+                                    borderWidth: 1,
+                                    shadow: false
+                                },
+                                tooltip: {
+                                    headerFormat: '<b>{point.x}</b><br/>',
+                                    pointFormat: '{series.name}: {point.y}<br/>{point.percentage:.1f}%<br/>'
+                                },
+                                plotOptions: {
+                                    column: {
+                                        stacking: 'normal',
+                                        dataLabels: {
+                                            enabled: true
+                                        }
+                                    }
+                                },
+                                series: [{
+                                    name: 'Gaps',
+                                    data: [0, 194401, 68257, 34331]
+                                },{
+                                    name: 'Achieved',
+                                    data: [1401598, 1067037, 1067037, 987434]
+                                } ]
+                            });
+        }
+        function getChild(){
+
+                Highcharts.chart('child', {
+                    chart: {
+                                    type: 'column'
+                                },
+                                title: {
+                                    text: 'Kenya Children Coverage Cascade'
+                                },
+                                xAxis: {
+                                    categories: ['CHLIV', 'Children Currently in Care', 'Children Currently in ART', 'Children Supressed']
+                                },
+                                yAxis: {
+                                    title: {
+                                        text: 'Number'
+                                    },
+                                    stackLabels: {
+                                        enabled: true,
+                                        style: {
+                                            fontWeight: 'bold',
+                                            color: ( // theme
+                                                Highcharts.defaultOptions.title.style &&
+                                                Highcharts.defaultOptions.title.style.color
+                                            ) || 'gray'
+                                        },
+                                        formatter: function () {
+                                            var diff = this.points[0][1]-this.points[0][0]
+                                                return Math.round(100 - (100 * diff / this.total)) + '%';
+                                            }
+                                    }
+                                },
+                                legend: {
+                                    align: 'center',
+                                    verticalAlign: 'bottom',
+                                    y: 20,
+                                    floating: true,
+                                    backgroundColor:
+                                        Highcharts.defaultOptions.legend.backgroundColor || 'white',
+                                    borderColor: '#CCC',
+                                    borderWidth: 1,
+                                    shadow: false
+                                },
+                                tooltip: {
+                                    headerFormat: '<b>{point.x}</b><br/>',
+                                    pointFormat: '{series.name}: {point.y}<br/>{point.percentage:.1f}%<br/>'
+                                },
+                                plotOptions: {
+                                    column: {
+                                        stacking: 'normal',
+                                        dataLabels: {
+                                            enabled: true
+                                        }
+                                    }
+                                },
+                                series: [{
+                                    name: 'Gaps',
+                                    data: [0, 24489, 14877, 19319]
+                                },{
+                                    name: 'Achieved',
+                                    data: [106807, 71637, 71637, 58543]
+                                } ]
+                            });
+        }
+        function getAdolesent(){
+
+            Highcharts.chart('adolesent', {
+                             chart: {
+                                    type: 'column'
+                                },
+                                title: {
+                                    text: 'Kenya Adolescent Coverage Cascade'
+                                },
+                                xAxis: {
+                                    categories: ['aLHIV', 'Adolescent Currently in Care', 'Adolescent Currently in ART', 'Adolescent Supressed']
+                                },
+                                yAxis: {
+                                    title: {
+                                        text: 'Number'
+                                    },
+                                    stackLabels: {
+                                        enabled: true,
+                                        style: {
+                                            fontWeight: 'bold',
+                                            color: ( // theme
+                                                Highcharts.defaultOptions.title.style &&
+                                                Highcharts.defaultOptions.title.style.color
+                                            ) || 'gray'
+                                        },
+                                        formatter: function () {
+                                            var diff = this.points[0][1]-this.points[0][0]
+                                                return Math.round(100 - (100 * diff / this.total)) + '%';
+                                            }
+                                    }
+                                },
+                                legend: {
+                                    align: 'center',
+                                    verticalAlign: 'bottom',
+                                    y: 20,
+                                    floating: true,
+                                    backgroundColor:
+                                        Highcharts.defaultOptions.legend.backgroundColor || 'white',
+                                    borderColor: '#CCC',
+                                    borderWidth: 1,
+                                    shadow: false
+                                },
+                                tooltip: {
+                                    headerFormat: '<b>{point.x}</b><br/>',
+                                    pointFormat: '{series.name}: {point.y}<br/>{point.percentage:.1f}%<br/>'
+                                },
+                                plotOptions: {
+                                    column: {
+                                        stacking: 'normal',
+                                        dataLabels: {
+                                            enabled: true
+                                        }
+                                    }
+                                },
+                                series: [{
+                                    name: 'Gaps',
+                                    data: [0, 10399, 2152, 5014]
+                                },{
+                                    name: 'Achieved',
+                                    data: [91634, 72071, 72071, 61787]
+                                } ]
+                            });
+                    }
+    function getOverall(){
+
+                Highcharts.chart('overall', {
+                             chart: {
+                                    type: 'column'
+                                },
+                                title: {
+                                    text: 'Kenya Overall Coverage Cascade'
+                                },
+                                xAxis: {
+                                    categories: ['PHLIV', 'Overall Currently in Care', 'Overall Currently in ART', 'Overall Supressed']
+                                },
+                                yAxis: {
+                                    title: {
+                                        text: 'Number'
+                                    },
+                                    stackLabels: {
+                                        enabled: true,
+                                        style: {
+                                            fontWeight: 'bold',
+                                            color: ( // theme
+                                                Highcharts.defaultOptions.title.style &&
+                                                Highcharts.defaultOptions.title.style.color
+                                            ) || 'gray'
+                                        },
+                                        formatter: function () {
+                                            var diff = this.points[0][1]-this.points[0][0]
+                                                return Math.round(100 - (100 * diff / this.total)) + '%';
+                                            }
+                                    }
+                                },
+                                legend: {
+                                    align: 'center',
+                                    verticalAlign: 'bottom',
+                                    y: 20,
+                                    floating: true,
+                                    backgroundColor:
+                                        Highcharts.defaultOptions.legend.backgroundColor || 'white',
+                                    borderColor: '#CCC',
+                                    borderWidth: 1,
+                                    shadow: false
+                                },
+                                tooltip: {
+                                    headerFormat: '<b>{point.x}</b><br/>',
+                                    pointFormat: '{series.name}: {point.y}<br/>{point.percentage:.1f}%<br/>'
+                                },
+                                plotOptions: {
+                                    column: {
+                                        stacking: 'normal',
+                                        dataLabels: {
+                                            enabled: true
+                                        }
+                                    }
+                                },
+                                series: [{
+                                    name: 'Gaps',
+                                    data: [0, 218891, 83134, 56099]
+                                },{
+                                    name: 'Achieved',
+                                    data: [1508405, 1138674, 1138674, 1043528]
+                                } ]
+                            });
+                }
+                function getMale(){
+
+                        Highcharts.chart('male', {
+                            chart: {
+                                    type: 'column'
+                                },
+                                title: {
+                                    text: 'Kenya Male Coverage Cascade'
+                                },
+                                xAxis: {
+                                    categories: ['MHLIV', 'Male Currently in Care', 'Male Currently in ART', 'Male Currently Supressed']
+                                },
+                                yAxis: {
+                                    title: {
+                                        text: 'Number'
+                                    },
+                                    stackLabels: {
+                                        enabled: true,
+                                        style: {
+                                            fontWeight: 'bold',
+                                            color: ( // theme
+                                                Highcharts.defaultOptions.title.style &&
+                                                Highcharts.defaultOptions.title.style.color
+                                            ) || 'gray'
+                                        },
+                                        formatter: function () {
+                                            var diff = this.points[0][1]-this.points[0][0]
+                                                return Math.round(100 - (100 * diff / this.total)) + '%';
+                                            }
+                                    }
+                                },
+                                legend: {
+                                    align: 'center',
+                                    verticalAlign: 'bottom',
+                                    y: 20,
+                                    floating: true,
+                                    backgroundColor:
+                                        Highcharts.defaultOptions.legend.backgroundColor || 'white',
+                                    borderColor: '#CCC',
+                                    borderWidth: 1,
+                                    shadow: false
+                                },
+                                tooltip: {
+                                    headerFormat: '<b>{point.x}</b><br/>',
+                                    pointFormat: '{series.name}: {point.y}<br/>{point.percentage:.1f}%<br/>'
+                                },
+                                plotOptions: {
+                                    column: {
+                                        stacking: 'normal',
+                                        dataLabels: {
+                                            enabled: true
+                                        }
+                                    }
+                                },
+                                series: [{
+                                    name: 'Gaps',
+                                    data: [0, 106224, 61732, 44627]
+                                },{
+                                    name: 'Achieved',
+                                    data: [494353, 338694, 338694, 315757]
+                                } ]
+                            });
+                        }
+                function getFemale(){
+
+                            Highcharts.chart('female', {
+                                chart: {
+                                    type: 'column'
+                                },
+                                title: {
+                                    text: 'Kenya Female Coverage Cascade'
+                                },
+                                xAxis: {
+                                    categories: ['FHLIV', 'Female Currently in Care', 'Female Currently in ART', 'Female Currently Supressed']
+                                },
+                                yAxis: {
+                                    
+                                    title: {
+                                        text: 'Number'
+                                    },
+                                    stackLabels: {
+                                        enabled: false,
+                                        style: {
+                                            fontWeight: 'bold',
+                                            color: ( // theme
+                                                Highcharts.defaultOptions.title.style &&
+                                                Highcharts.defaultOptions.title.style.color
+                                            ) || 'gray'
+                                        }
+                                        // formatter: function () {
+                                        //     var diff = this.points[0][1]-this.points[0][0]
+                                        //         return Math.round(100 - (100 * diff / this.total)) + '%';
+                                        //     }
+                                    }
+                                },
+                                legend: {
+                                    align: 'center',
+                                    verticalAlign: 'bottom',
+                                    y: 20,
+                                    floating: true,
+                                    backgroundColor:
+                                        Highcharts.defaultOptions.legend.backgroundColor || 'white',
+                                    borderColor: '#CCC',
+                                    borderWidth: 1,
+                                    shadow: false
+                                },
+                                tooltip: {
+                                    headerFormat: '<b>{point.x}</b><br/>',
+                                    pointFormat: '{series.name}: {point.y}<br/>{point.percentage:.1f}%<br/>'
+                                },
+                                plotOptions: {
+                                    column: {
+                                        stacking: 'normal',
+                                        dataLabels: {
+                                            enabled: true
+                                        }
+                                    }
+                                },
+                                series: [{
+                                    name: 'Gaps',
+                                    data: [0, 69354, -10416, -28273]
+                                },{
+                                    name: 'Achieved',
+                                    data: [886330, 728343, 728343, 674408]
+                                } ]
+                            });
+                            }
+            function getYadult(){
+
+                            Highcharts.chart('yadult', {
+                                chart: {
+                                    type: 'column'
+                                },
+                                title: {
+                                    text: 'Kenya Young Adult Coverage Cascade'
+                                },
+                                xAxis: {
+                                    categories: ['YAHLIV', 'Young Adults Currently in Care', 'Young Adults Currently in ART', 'Young Adults Currently Supressed']
+                                },
+                                yAxis: {
+                                    title: {
+                                        text: 'Number'
+                                    },
+                                    stackLabels: {
+                                        enabled: true,
+                                        style: {
+                                            fontWeight: 'bold',
+                                            color: ( // theme
+                                                Highcharts.defaultOptions.title.style &&
+                                                Highcharts.defaultOptions.title.style.color
+                                            ) || 'gray'
+                                        },
+                                        formatter: function () {
+                                            var diff = this.points[0][1]-this.points[0][0]
+                                                return Math.round(100 - (100 * diff / this.total)) + '%';
+                                            }
+                                    }
+                                },
+                                legend: {
+                                    align: 'center',
+                                    verticalAlign: 'bottom',
+                                    y: 20,
+                                    floating: true,
+                                    backgroundColor:
+                                        Highcharts.defaultOptions.legend.backgroundColor || 'white',
+                                    borderColor: '#CCC',
+                                    borderWidth: 1,
+                                    shadow: false
+                                },
+                                tooltip: {
+                                    headerFormat: '<b>{point.x}</b><br/>',
+                                    pointFormat: '{series.name}: {point.y}<br/>{point.percentage:.1f}%<br/>'
+                                },
+                                plotOptions: {
+                                    column: {
+                                        stacking: 'normal',
+                                        dataLabels: {
+                                            enabled: true
+                                        }
+                                    }
+                                },
+                                series: [{
+                                    name: 'Gaps',
+                                    data: [0, 43507, 30414, 31088]
+                                },{
+                                    name: 'Achieved',
+                                    data: [145471, 87417, 87417, 74960]
+                                } ]
+                            });
+                            }
+
+
+
+
+            
+        </script>
+           
+        <!-- ------------------------ PAGE DATA LOGIC ------------------------ -->
+    </body>
+</html>
