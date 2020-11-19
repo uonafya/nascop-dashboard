@@ -127,120 +127,123 @@ const filter_template = `
 `;
 
 $(document).ready(function () {
-    $("#county-dropdown").on('change', function (ev) {
-        let v_al = $(this).val()
-        if(v_al != "HfVjCurKxh2"){
-            window.sessionStorage.setItem("ouFilterType", "county")
-        }
-        changeHashOnFilter({ou:v_al})
-        if(v_al != 'HfVjCurKxh2' && v_al != ''){
-            $("#subcounty-dropdown").removeAttr('disabled')
-            fetchSubcounties(v_al);
-        }else{
-            $("#subcounty-dropdown").attr('disabled', true)
-        }
-    })
+    setTimeout(() => {
     
-    $("#subcounty-dropdown").on('change', function (ev) {
-        let v_al = $(this).val()
-        window.sessionStorage.setItem("ouFilterType", "subcounty")
-        changeHashOnFilter({ou:v_al})
-    })
-    
-    $("#ward-dropdown").on('change', function (ev) {
-        let v_al = $(this).val()
-        changeHashOnFilter({ou:v_al})
-    })
-    
-    $("#facility-dropdown").on('change', function (ev) {
-        let v_al = $(this).val()
-        changeHashOnFilter({ou:v_al})
-    })
-
-
-    
-    
-    $("#period-dropdownFrom").on('change', function (ev) {
-        let v_al = $(this).val();
-        if(v_al.includes('/')){ v_al = v_al.replace('/', 'W') }
-        changeHashOnFilter({pe:v_al})
-        $('#period-dropdownFromQs').removeAttr('disabled')
-        $('#period-dropdownTo').removeAttr('disabled')
-        sessionStorage.removeItem("periodIsQuarters")
-        $($('#period-dropdownTo option')).each(function (ix, ele) {
-            if(ele.getAttribute('value') < v_al){
-                ele.setAttribute('disabled', true)
+        $("#county-dropdown").on('change', function (ev) {
+            let v_al = $(this).val()
+            if(v_al != "HfVjCurKxh2"){
+                window.sessionStorage.setItem("ouFilterType", "county")
             }
-        });
-    })
-    $("#period-dropdownFromQs").on('change', function (ev) {
-        sessionStorage.setItem("periodIsQuarters", true)
-        let p_val = $("#period-dropdownFrom").val()
-        let v_al = $(this).val();
-        let v_alq = p_val+"Q"+v_al //""
+            changeHashOnFilter({ou:v_al})
+            if(v_al != 'HfVjCurKxh2' && v_al != ''){
+                $("#subcounty-dropdown").removeAttr('disabled')
+                fetchSubcounties(v_al);
+            }else{
+                $("#subcounty-dropdown").attr('disabled', true)
+            }
+        })
         
-        // if(sessionStorage.getItem("isPeriodRange") === "false" || !sessionStorage.getItem("isPeriodRange") ){
-        //     v_alq = p_val+"Q"+v_al
-        // }else{
-        //     if(v_al != null && v_al != ""){
-        //         for (let d = 1; d <= parseFloat(v_al); d++) {
-        //             v_alq += p_val+"Q"+d+";"
-        //         }
-        //         v_alq = v_alq.substr(0,v_alq.length-1)
-        //     }
-        // }
-        console.log("fromQs = ", v_alq);
-        if(v_alq.includes('/')){ v_alq = v_alq.replace('/', 'W') }
-        changeHashOnFilter({pe:v_alq})
-        $('#period-dropdownToQs').removeAttr('disabled')
-    })
-    $("#period-dropdownTo").on('change', function (ev) {
-        let v_al = $(this).val();
-        let v_al_fr = $('#period-dropdownFrom').val();
-        if(v_al.includes('/')){ v_al = v_al.replace('/', 'W') }
-        if(v_al_fr.includes('/')){ v_al_fr = v_al_fr.replace('/', 'W') }
-        changeHashOnFilter({pe: v_al_fr, pe_to:v_al})
-    })
-    $("#period-dropdownToQs").on('change', function (ev) {
-        let p_val = $("#period-dropdownTo").val()
-        let v_al = $(this).val();
+        $("#subcounty-dropdown").on('change', function (ev) {
+            let v_al = $(this).val()
+            window.sessionStorage.setItem("ouFilterType", "subcounty")
+            changeHashOnFilter({ou:v_al})
+        })
         
-        let v_al_fr = $('#period-dropdownFrom').val();
-        let v_al_fr_qs = $('#period-dropdownFromQs').val();
-        let v_alf = v_al_fr+"Q"+v_al_fr_qs //""
-        // if(v_al_fr_qs != null && v_al_fr_qs != ""){
-        //     for (let d = 1; d <= parseFloat(v_al_fr_qs); d++) {
-        //         v_alf += v_al_fr+"Q"+d+";"
-        //     }
-        //     v_alf = v_alf.substr(0,v_alf.length-1)
-        // }
-
-        let v_alq = p_val+"Q"+v_al //""
-        // if(v_al != null && v_al != ""){
-        //     for (let d = 1; d <= parseFloat(v_al); d++) {
-        //         v_alq += p_val+"Q"+d+";"
-        //     }
-        //     v_alq = v_alq.substr(0,v_alq.length-1)
-        // }
+        $("#ward-dropdown").on('change', function (ev) {
+            let v_al = $(this).val()
+            changeHashOnFilter({ou:v_al})
+        })
         
-        if(v_alq.includes('/')){ v_alq = v_alq.replace('/', 'W') }
-        changeHashOnFilter({pe: v_alf, pe_to:v_alq})
-    })
-
-    $("#is_range").on('change', function (v) {
-        let v_al = $(this).is(':checked')
-        changeHashOnFilter({range: v_al.toString()})
-        sessionStorage.setItem('isPeriodRange',v_al)
-    })
+        $("#facility-dropdown").on('change', function (ev) {
+            let v_al = $(this).val()
+            changeHashOnFilter({ou:v_al})
+        })
 
 
+        
+        
+        $("#period-dropdownFrom").on('change', function (ev) {
+            let v_al = $(this).val();
+            if(v_al.includes('/')){ v_al = v_al.replace('/', 'W') }
+            changeHashOnFilter({pe:v_al})
+            $('#period-dropdownFromQs').removeAttr('disabled')
+            $('#period-dropdownTo').removeAttr('disabled')
+            sessionStorage.removeItem("periodIsQuarters")
+            $($('#period-dropdownTo option')).each(function (ix, ele) {
+                if(ele.getAttribute('value') < v_al){
+                    ele.setAttribute('disabled', true)
+                }
+            });
+        })
+        $("#period-dropdownFromQs").on('change', function (ev) {
+            sessionStorage.setItem("periodIsQuarters", true)
+            let p_val = $("#period-dropdownFrom").val()
+            let v_al = $(this).val();
+            let v_alq = p_val+"Q"+v_al //""
+            
+            // if(sessionStorage.getItem("isPeriodRange") === "false" || !sessionStorage.getItem("isPeriodRange") ){
+            //     v_alq = p_val+"Q"+v_al
+            // }else{
+            //     if(v_al != null && v_al != ""){
+            //         for (let d = 1; d <= parseFloat(v_al); d++) {
+            //             v_alq += p_val+"Q"+d+";"
+            //         }
+            //         v_alq = v_alq.substr(0,v_alq.length-1)
+            //     }
+            // }
+            console.log("fromQs = ", v_alq);
+            if(v_alq.includes('/')){ v_alq = v_alq.replace('/', 'W') }
+            changeHashOnFilter({pe:v_alq})
+            $('#period-dropdownToQs').removeAttr('disabled')
+        })
+        $("#period-dropdownTo").on('change', function (ev) {
+            let v_al = $(this).val();
+            let v_al_fr = $('#period-dropdownFrom').val();
+            if(v_al.includes('/')){ v_al = v_al.replace('/', 'W') }
+            if(v_al_fr.includes('/')){ v_al_fr = v_al_fr.replace('/', 'W') }
+            changeHashOnFilter({pe: v_al_fr, pe_to:v_al})
+        })
+        $("#period-dropdownToQs").on('change', function (ev) {
+            let p_val = $("#period-dropdownTo").val()
+            let v_al = $(this).val();
+            
+            let v_al_fr = $('#period-dropdownFrom').val();
+            let v_al_fr_qs = $('#period-dropdownFromQs').val();
+            let v_alf = v_al_fr+"Q"+v_al_fr_qs //""
+            // if(v_al_fr_qs != null && v_al_fr_qs != ""){
+            //     for (let d = 1; d <= parseFloat(v_al_fr_qs); d++) {
+            //         v_alf += v_al_fr+"Q"+d+";"
+            //     }
+            //     v_alf = v_alf.substr(0,v_alf.length-1)
+            // }
+
+            let v_alq = p_val+"Q"+v_al //""
+            // if(v_al != null && v_al != ""){
+            //     for (let d = 1; d <= parseFloat(v_al); d++) {
+            //         v_alq += p_val+"Q"+d+";"
+            //     }
+            //     v_alq = v_alq.substr(0,v_alq.length-1)
+            // }
+            
+            if(v_alq.includes('/')){ v_alq = v_alq.replace('/', 'W') }
+            changeHashOnFilter({pe: v_alf, pe_to:v_alq})
+        })
+
+        $("#is_range").on('change', function (v) {
+            let v_al = $(this).is(':checked')
+            changeHashOnFilter({range: v_al.toString()})
+            sessionStorage.setItem('isPeriodRange',v_al)
+        })
 
 
-    let this_yr = new Date().getFullYear()
-    for (let l = 0; l <= 5; l++) {
-        let y_r = this_yr - l
-        $('.yearsfilt').append('<option value="'+y_r+'">'+y_r+'</option>')
-    }
+
+
+        let this_yr = new Date().getFullYear()
+        for (let l = 0; l <= 5; l++) {
+            let y_r = this_yr - l
+            $('.yearsfilt').append('<option value="'+y_r+'">'+y_r+'</option>')
+        }
+    }, 500);
 });
 
 const getQuartersBtwnPeriod = (p1,p2) => {
