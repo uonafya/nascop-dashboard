@@ -288,7 +288,7 @@
                 if(prop && prop.ou){
                     org_unit = prop.ou
                 }
-                let prd = `THIS_YEAR`
+                let prd = `LAST_YEAR`
                 if(prop && prop.pe){
                     prd = prop.pe
                 }
@@ -297,11 +297,17 @@
                 var finalpe =prd.replace(/,/g, ';');
                 
 
-                let ancascade = `https://hiskenya.org/api/26/analytics.json?dimension=ou:${org_unit}&dimension=dx:xNTM673ne69;kU5ew70I7kj;vlme3PThHl1;AlWRnztxhOU;VsRrzNMda22;qp8WQXmWtnr;ArG6zbCMBr2;pct05jgGcLt;uSxBUWnagGg;i5jVVTm1vI8;Fz0LzxMT1vV&filter=pe:${finalpe}&displayProperty=NAME`
+                let Adult = `https://hiskenya.org/api/26/analytics.json?dimension=dx:jRO2cj8LlNZ;taOwegTT6B1;Z655hAUelBN&dimension=pe:${finalpe}:&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
+                let child =`https://hiskenya.org/api/26/analytics.json?dimension=dx:EpZYkbBwJLF;MOJxAdu6Cmb;yanhryQN8u2&dimension=pe:${finalpe}:&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
 
-           getAdult()
-           getChild()
-           getAdolesent()
+                // aEgq9k5jJOP;
+                let Adolesent = `https://hiskenya.org/api/26/analytics.json?dimension=dx:pHMm7OaoCdF;ZvW3UZpOAJw;CkihSEjFODg&dimension=pe:${finalpe}&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
+
+                // let Adolesent_estimates = `https://hiskenya.org/api/26/analytics.json?dimension=dx:aEgq9k5jJOP&dimension=pe:2020&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
+
+           getAdult(Adult)
+           getChild(child)
+           getAdolesent(Adolesent)
            getOverall()
            getMale()
            getFemale()
@@ -309,24 +315,41 @@
 
             
         }
-        function getAdult(){
-            
+        function getAdult(url){
+         
+                justFetch(url).then(data=>{
+                    let final_data = [{name: 'Gaps', data: []}, {name: 'Achieved', data: []}]
+                    data.metaData.dimensions.dx.map((dx,dinx)=>{
+                        let prev_val = 0
+                        // let series = {}
+                        // series.name = data.metaData.items[dx].name
+                        // series.data = []
+                        let rows_by_dx = data.rows.filter(r=>r[0]===dx)
+                        if(dinx == 1){ prev_val = sumArr( Array.from( data.rows.filter(r=>r[0]===data.metaData.dimensions.dx[0]), d=>d[2]) ) } else if (dinx == 2)
+                        {  prev_val = sumArr( Array.from( data.rows.filter(r=>r[0] === 'taOwegTT6B1'), d=>d[2]))}
+                        let val = sumArr(Array.from(rows_by_dx, s=>s[2]))
+                        if (prev_val == 0){final_data[0].data.push(0)}else {final_data[0].data.push(prev_val-val)}                        
+                        final_data[1].data.push(val)
 
-                Highcharts.chart('adult', {
+                        // series.data.push(val)
+                        // final_data.push(series)
+                    })
+                    console.log("data = ", JSON.stringify(final_data));
+                    Highcharts.chart('adult', {
                                 chart: {
                                     type: 'column'
                                 },
                                 title: {
-                                    text: 'Kenya Adult Coverage Cascade'
+                                    text: 'Kenya Adult Coverage CASCADE'
                                 },
                                 xAxis: {
-                                    categories: ['AHLIV', 'Adults Currently in Care', 'Adults Currently in ART', 'Adults Supressed']
+                                    categories: ['ALHIV', 'Adults on ART', 'Adults showing viral load suppression']//Array.from(final_data, f=>f.name)
                                 },
                                 yAxis: {
+                                    min: 0,
                                     title: {
-                                        text: 'Number'
-                                    },
-                                    stackLabels: {
+                                        text: 'Population Number'
+                                    },  stackLabels: {
                                         enabled: true,
                                         style: {
                                             fontWeight: 'bold',
@@ -334,10 +357,16 @@
                                                 Highcharts.defaultOptions.title.style &&
                                                 Highcharts.defaultOptions.title.style.color
                                             ) || 'gray'
-                                        },
+                                        }
+                                        ,
                                         formatter: function () {
-                                            var diff = this.points[0][1]-this.points[0][0]
+                                            let val = this.points[0]
+                                            console.log('11',val)
+                                            if (val !== undefined){
+                                            var diff = val[1]-val[0]
                                                 return Math.round(100 - (100 * diff / this.total)) + '%';
+                                            }
+                                                                                        
                                             }
                                     }
                                 },
@@ -357,39 +386,52 @@
                                     pointFormat: '{series.name}: {point.y}<br/>{point.percentage:.1f}%<br/>'
                                 },
                                 plotOptions: {
-                                    column: {
+                                    series: {
                                         stacking: 'normal',
                                         dataLabels: {
                                             enabled: true
                                         }
                                     }
                                 },
-                                series: [{
-                                    name: 'Gaps',
-                                    data: [0, 194401, 68257, 34331]
-                                },{
-                                    name: 'Achieved',
-                                    data: [1401598, 1067037, 1067037, 987434]
-                                } ]
-                            });
-        }
-        function getChild(){
+                                series: final_data
+                            });    
+                })                 
+            } 
+        function getChild(url){
 
-                Highcharts.chart('child', {
-                    chart: {
+            justFetch(url).then(data=>{
+                    let final_data = [{name: 'Gaps', data: []}, {name: 'Achieved', data: []}]
+                    data.metaData.dimensions.dx.map((dx,dinx)=>{
+                        let prev_val = 0
+                        // let series = {}
+                        // series.name = data.metaData.items[dx].name
+                        // series.data = []
+                        let rows_by_dx = data.rows.filter(r=>r[0]===dx)
+                        if(dinx == 1){ prev_val = sumArr( Array.from( data.rows.filter(r=>r[0]===data.metaData.dimensions.dx[0]), d=>d[2]) ) } else if (dinx == 2)
+                        {  prev_val = sumArr( Array.from( data.rows.filter(r=>r[0] === 'MOJxAdu6Cmb'), d=>d[2]))}
+                        let val = sumArr(Array.from(rows_by_dx, s=>s[2]))
+                        if (prev_val == 0){final_data[0].data.push(0)}else {final_data[0].data.push(prev_val-val)}                        
+                        final_data[1].data.push(val)
+
+                        // series.data.push(val)
+                        // final_data.push(series)
+                    })
+                    console.log("data = ", JSON.stringify(final_data));
+                    Highcharts.chart('child', {
+                                chart: {
                                     type: 'column'
                                 },
                                 title: {
-                                    text: 'Kenya Children Coverage Cascade'
+                                    text: 'Kenya Children Coverage CASCADE'
                                 },
                                 xAxis: {
-                                    categories: ['CHLIV', 'Children Currently in Care', 'Children Currently in ART', 'Children Supressed']
+                                    categories: ['CHLIV', 'Children Currently on Care', 'Children showing viral load suppression']//Array.from(final_data, f=>f.name)
                                 },
                                 yAxis: {
+                                    min: 0,
                                     title: {
-                                        text: 'Number'
-                                    },
-                                    stackLabels: {
+                                        text: 'Population Number'
+                                    },  stackLabels: {
                                         enabled: true,
                                         style: {
                                             fontWeight: 'bold',
@@ -397,10 +439,16 @@
                                                 Highcharts.defaultOptions.title.style &&
                                                 Highcharts.defaultOptions.title.style.color
                                             ) || 'gray'
-                                        },
+                                        }
+                                        ,
                                         formatter: function () {
-                                            var diff = this.points[0][1]-this.points[0][0]
+                                            let val = this.points[0]
+                                            console.log('11',val)
+                                            if (val !== undefined){
+                                            var diff = val[1]-val[0]
                                                 return Math.round(100 - (100 * diff / this.total)) + '%';
+                                            }
+                                                                                        
                                             }
                                     }
                                 },
@@ -420,39 +468,72 @@
                                     pointFormat: '{series.name}: {point.y}<br/>{point.percentage:.1f}%<br/>'
                                 },
                                 plotOptions: {
-                                    column: {
+                                    series: {
                                         stacking: 'normal',
                                         dataLabels: {
                                             enabled: true
                                         }
                                     }
                                 },
-                                series: [{
-                                    name: 'Gaps',
-                                    data: [0, 24489, 14877, 19319]
-                                },{
-                                    name: 'Achieved',
-                                    data: [106807, 71637, 71637, 58543]
-                                } ]
-                            });
-        }
-        function getAdolesent(){
+                                series: final_data
+                            });    
+                })                 
+            } 
+        function getAdolesent(url,e_url){
+            let final_data = [{name: 'Gaps', data: []}, {name: 'Achieved', data: []}]
+            let prev_val = 0
+            console.log(e_url)
+            // justFetch(e_url).then(data=>{
+            //     data.metaData.dimensions.dx.map((dx,dinx)=>{
+                        
+            //             // let series = {}
+            //             // series.name = data.metaData.items[dx].name
+            //             // series.data = []
+            //             let rows_by_dx = data.rows.filter(r=>r[0]===dx)
+            //             console.log(data.rows)
+            //             if(dinx !==0 ){ prev_val = sumArr( Array.from( data.rows.filter(r=>r[0]===data.metaData.dimensions.dx[0]), d=>d[2]) ) } 
+            //             let val = sumArr(Array.from(rows_by_dx, s=>s[2]))
+            //             if (prev_val == 0){final_data[0].data.push(0)}else {final_data[0].data.push(prev_val-val)}                        
+            //             final_data[1].data.push(val)
+            //     })
 
-            Highcharts.chart('adolesent', {
-                             chart: {
+            // })
+            // console.log('richie', prev_val)
+
+            justFetch(url).then(data=>{
+                    
+                    data.metaData.dimensions.dx.map((dx,dinx)=>{
+                        // let prev_val = 0
+                        // let series = {}
+                        // series.name = data.metaData.items[dx].name
+                        // series.data = []
+                        let rows_by_dx = data.rows.filter(r=>r[0]===dx)
+                        if(dinx == 1){ prev_val = sumArr( Array.from( data.rows.filter(r=>r[0]===data.metaData.dimensions.dx[0]), d=>d[2]) ) } else if (dinx == 2)
+                        {  prev_val = sumArr( Array.from( data.rows.filter(r=>r[0] === 'ZvW3UZpOAJw'), d=>d[2]))}
+                        let val = sumArr(Array.from(rows_by_dx, s=>s[2]))
+                        // if (prev_val == 0){final_data[0].data.push(0)}else {}    
+                        final_data[0].data.push(prev_val-val)                    
+                        final_data[1].data.push(val)
+
+                        // series.data.push(val)
+                        // final_data.push(series)
+                    })
+                    console.log("data = ", JSON.stringify(final_data));
+                    Highcharts.chart('adolesent', {
+                                chart: {
                                     type: 'column'
                                 },
                                 title: {
-                                    text: 'Kenya Adolescent Coverage Cascade'
+                                    text: 'Kenya Adolesent Coverage CASCADE'
                                 },
                                 xAxis: {
-                                    categories: ['aLHIV', 'Adolescent Currently in Care', 'Adolescent Currently in ART', 'Adolescent Supressed']
+                                    categories: ['aLHIV', 'Currently on Treatment', 'Showing Viral Load Suppression']//Array.from(final_data, f=>f.name)
                                 },
                                 yAxis: {
+                                    min: 0,
                                     title: {
-                                        text: 'Number'
-                                    },
-                                    stackLabels: {
+                                        text: 'Population Number'
+                                    },  stackLabels: {
                                         enabled: true,
                                         style: {
                                             fontWeight: 'bold',
@@ -460,10 +541,16 @@
                                                 Highcharts.defaultOptions.title.style &&
                                                 Highcharts.defaultOptions.title.style.color
                                             ) || 'gray'
-                                        },
+                                        }
+                                        ,
                                         formatter: function () {
-                                            var diff = this.points[0][1]-this.points[0][0]
+                                            let val = this.points[0]
+                                            console.log(val)
+                                            if (val !== undefined){
+                                            var diff = val[1]-val[0]
                                                 return Math.round(100 - (100 * diff / this.total)) + '%';
+                                            }
+                                                                                        
                                             }
                                     }
                                 },
@@ -483,22 +570,17 @@
                                     pointFormat: '{series.name}: {point.y}<br/>{point.percentage:.1f}%<br/>'
                                 },
                                 plotOptions: {
-                                    column: {
+                                    series: {
                                         stacking: 'normal',
                                         dataLabels: {
                                             enabled: true
                                         }
                                     }
                                 },
-                                series: [{
-                                    name: 'Gaps',
-                                    data: [0, 10399, 2152, 5014]
-                                },{
-                                    name: 'Achieved',
-                                    data: [91634, 72071, 72071, 61787]
-                                } ]
-                            });
-                    }
+                                series: final_data
+                            });    
+                })                 
+            } 
     function getOverall(){
 
                 Highcharts.chart('overall', {
