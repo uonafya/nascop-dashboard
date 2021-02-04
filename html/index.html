@@ -188,7 +188,7 @@
                         is_ward:false, 
                         is_facility:false, 
                         is_period:true, 
-                        is_period_range:false}
+                        is_period_range:true}
                     let is_loading = {is_loading: false}
                     let footer_yr = { yr: new Date().getFullYear()}
                     let page_status = {title: '', message: '', type: 'info', hidden: true} //type: info, success, danger
@@ -213,6 +213,7 @@
         <!-- ++++++++++++++++++++++++ PAGE DATA LOGIC ++++++++++++++++++++++++ -->
         <script>
             window.fetchData = (prop) => {
+               
                 // let org_unit = window.sessionStorage.getItem('ess_ou') || "HfVjCurKxh2"
                 let org_unit = "HfVjCurKxh2"
 
@@ -226,14 +227,20 @@
 
                 let ouFilterType = window.sessionStorage.getItem("ouFilterType") || "national"
                 var finalpe =prd.replace(/,/g, ';');
-
-                console.log('richie1',finalpe)
+                if (finalpe == `LAST_YEAR`){
+                    var yr = `LAST_YEAR`
+                }else{
+                    var yr = finalpe.substring(0,4)
+                }
                 
 
-                let ancascade = `https://hiskenya.org/api/26/analytics.json?dimension=ou:${org_unit}&dimension=dx:Fz0LzxMT1vV;uSxBUWnagGg;i5jVVTm1vI8;pct05jgGcLt;xNTM673ne69;KsxPBOVAyjJ;ivtLMB7qdKg;xvUt174iyYS;kU5ew70I7kj;ZH8BGmU9SHJ;vlme3PThHl1;AlWRnztxhOU;KMy83Jn1QgO;VsRrzNMda22;cmeMfuPL3VL;qp8WQXmWtnr;MHmKiukySbZ;ArG6zbCMBr2;RsYvCg0aeuZ&filter=pe:${finalpe}&displayProperty=NAME`
+                
+
+                let ancascade = `https://hiskenya.org/api/26/analytics.json?dimension=ou:${org_unit}&dimension=dx:Fz0LzxMT1vV;uSxBUWnagGg;i5jVVTm1vI8;pct05jgGcLt;xNTM673ne69;KsxPBOVAyjJ;ivtLMB7qdKg;xvUt174iyYS;kU5ew70I7kj;vlme3PThHl1;AlWRnztxhOU;KMy83Jn1QgO;VsRrzNMda22;cmeMfuPL3VL;qp8WQXmWtnr;MHmKiukySbZ;ArG6zbCMBr2;RsYvCg0aeuZ&filter=pe:${finalpe}&displayProperty=NAME`
+                let estimated_pmtct= `https://hiskenya.org/api/26/analytics.json?dimension=ou:${org_unit}&dimension=dx:ZH8BGmU9SHJ&filter=pe:${yr}&displayProperty=NAME`
                 // let data = fetchdata(ancascade)
                 getAnc(ancascade)
-                getMaternal(ancascade)
+                getMaternal(ancascade,estimated_pmtct)
                 // getInfant()
 
             
@@ -323,20 +330,23 @@
                                 },
                             series: [{
                                 name: 'Unreached Mothers',
-                                data: unreached_values
+                                data: unreached_values,
+                                color:'#615e5d'
                             }, {
                                 name: 'Missed Opportunities',
-                                data: missed_values
+                                data: missed_values,
+                                color:'#f28f43'
                             }, {
                                 name: 'Reached Mothers',
-                                data: reached_values
+                                data: reached_values,
+                                color:'#2f7ed8'
                             }]
                         });
 
                 });
             }
 
-            function getMaternal(url){ 
+            function getMaternal(url,e_url){ 
                 let reached = {
                     'ZH8BGmU9SHJ': 'Need for PMTCT',
                     'VsRrzNMda22': 'PMTCT Total Positive',
@@ -358,10 +368,18 @@
                 let reached_values = [];
                 let missed_values = [];
                 let unreached_values = [];
+                var res = []
+
+                console.log('url',url)
+
+                console.log('eurl',e_url)
             justFetch(url, {})
-                .then(response=>{
-                    console.log(url)
-                    response.rows.map( row => {
+                .then(response1=>{                    
+                    justFetch(e_url,{})
+                    .then(response2=>{                    
+                    res.push(response1)
+                    res = [...res,response2]
+                    res[0].rows.map( row => {
                             if(row[0] in reached) {
                                 reached[row[0]] = parseInt(row[2]);
                             } else if(row[0] in missed){
@@ -369,12 +387,21 @@
                             }
                         }
                     );
+                    res[1].rows.map( row => {
+                            if(row[0] in reached) {
+                                reached[row[0]] = parseInt(row[2]);
+                            } else if(row[0] in missed){
+                                missed[row[0]] = parseInt(row[2]);
+                            }
+                        }
+                    );
+                
                     
-                    var theorgunit = response.metaData.dimensions.ou[0];
-                    var curorg = response.metaData.items[theorgunit].name;
+                    var theorgunit = res[0].metaData.dimensions.ou[0];
+                    var curorg = res[0].metaData.items[theorgunit].name;
 
                     
-                    console.log(response.metaData.items[response.metaData.dimensions.pe[0]].name)
+                    console.log(res[0].metaData.items[res[0].metaData.dimensions.pe[0]].name)
                     
                     //convert dictionary to array by extracting values only
                     reached_values = Object.keys(reached).map(function (key) {
@@ -418,16 +445,20 @@
                                 },
                             series: [{
                                 name: 'Unreached Mothers',
-                                data: unreached_values
+                                data: unreached_values,
+                                color:'#615e5d'
                             }, {
                                 name: 'Missed Opportunities',
-                                data: missed_values
+                                data: missed_values,
+                                color:'#f28f43'
                             }, {
                                 
                                 name: 'Reached Mothers',
-                                data: reached_values
+                                data: reached_values,
+                                color:'#2f7ed8'
                             }]
                         });
+                    })
                 
             });
                                         

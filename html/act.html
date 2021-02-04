@@ -258,6 +258,7 @@
                         is_ward:false, 
                         is_facility:false, 
                         is_period:true, 
+                        // is_period_month:true,
                         is_period_range:false}
                     let is_loading = {is_loading: false}
                     let footer_yr = { yr: new Date().getFullYear()}
@@ -289,25 +290,31 @@
                 if(prop && prop.ou){
                     org_unit = prop.ou
                 }
-                let prd = `202012`
+                let prd = `LAST_MONTH`
                 if(prop && prop.pe){
                     prd = prop.pe
                 }
 
                 let ouFilterType = window.sessionStorage.getItem("ouFilterType") || "national"
                 var finalpe =prd.replace(/,/g, ';');
+                if (finalpe == `LAST_MONTH`){
+                    var yr = `LAST_YEAR`
+                }else{
+                    var yr = finalpe.substring(0,4)
+                }
+                
                 
 
                 let Adult = `https://hiskenya.org/api/26/analytics.json?dimension=dx:taOwegTT6B1;iXiUj2pCJon;Z655hAUelBN&dimension=pe:${finalpe}&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
-                let Adult_estimate = `https://hiskenya.org/api/26/analytics.json?dimension=dx:jRO2cj8LlNZ&dimension=pe:LAST_YEAR&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
+                let Adult_estimate = `https://hiskenya.org/api/26/analytics.json?dimension=dx:jRO2cj8LlNZ&dimension=pe:${yr}&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
                 let child =`https://hiskenya.org/api/26/analytics.json?dimension=dx:MOJxAdu6Cmb;jVTiH06lamG;yanhryQN8u2&dimension=pe:${finalpe}&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
-                let child_estimate = `https://hiskenya.org/api/26/analytics.json?dimension=dx:EpZYkbBwJLF&dimension=pe:LAST_YEAR&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
+                let child_estimate = `https://hiskenya.org/api/26/analytics.json?dimension=dx:EpZYkbBwJLF&dimension=pe:${yr}&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
                 let yAdult = `https://hiskenya.org/api/26/analytics.json?dimension=dx:ncOm8ACs7Yu;iQ7XNIj9bFr;EEYGxhBKDu6&dimension=pe:${finalpe}&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
-                let yAdult_estimates = `https://hiskenya.org/api/26/analytics.json?dimension=dx:rast2THwKSh&dimension=pe:LAST_YEAR&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
+                let yAdult_estimates = `https://hiskenya.org/api/26/analytics.json?dimension=dx:rast2THwKSh&dimension=pe:${yr}&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
                 let overall = `https://hiskenya.org/api/26/analytics.json?dimension=dx:xzxXd3Ia6C7;Tk1yaa1L16g;wolRW9OOtxf&dimension=pe:${finalpe}&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
-                let overall_estimate = `https://hiskenya.org/api/26/analytics.json?dimension=dx:ZYXTdVBPmVw&dimension=pe:LAST_YEAR&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
+                let overall_estimate = `https://hiskenya.org/api/26/analytics.json?dimension=dx:ZYXTdVBPmVw&dimension=pe:${yr}&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
                 let Adolesent = `https://hiskenya.org/api/26/analytics.json?dimension=dx:pHMm7OaoCdF;ZvW3UZpOAJw;CkihSEjFODg&dimension=pe:${finalpe}&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
-                let Adolesent_estimates = `https://hiskenya.org/api/26/analytics.json?dimension=dx:aEgq9k5jJOP&dimension=pe:LAST_YEAR&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
+                let Adolesent_estimates = `https://hiskenya.org/api/26/analytics.json?dimension=dx:aEgq9k5jJOP&dimension=pe:${yr}&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
                 let female = `https://hiskenya.org/api/26/analytics.json?dimension=dx:vt5fShXJZ9n;UUiHHIgoYKt;vpckcvOXWwH&dimension=pe:${finalpe}:&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
                 let male = `https://hiskenya.org/api/26/analytics.json?dimension=dx:PmUnWXUQxHi;pso1gdHKhiB;sRcIF9NRZvr&dimension=pe:${finalpe}:&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
 
@@ -323,8 +330,10 @@
             
         }
         function getAdult(url,e_url){     
-            let final_data = [{name: 'Gaps', data: []}, {name: 'Achieved', data: []}]
+            let final_data = [{name: 'Gaps', data: [], color:'#f28f43'}, {name: 'Achieved', data: [],color:'#2f7ed8'}]  
             let prev_val = 0
+            console.log('url',url)
+            console.log('eurl',e_url)
                 justFetch(e_url).then(data=>{
                     data.metaData.dimensions.dx.map((dx,dinx)=>{
                             
@@ -338,6 +347,7 @@
                             final_data[1].data.push(val)
                     })
                 })
+                console.log('final', final_data)
          
                 justFetch(url).then(data=>{
                     data.metaData.dimensions.dx.map((dx,dinx)=>{
@@ -353,8 +363,10 @@
 
                         // series.data.push(val)
                         // final_data.push(series)
+                        
                     })
-                    // console.log("data =1111 ", JSON.stringify(final_data));
+                    
+                    console.log("data =1111 ", JSON.stringify(final_data));
                     Highcharts.chart('adult', {
                                 chart: {
                                     type: 'column'
@@ -376,14 +388,16 @@
                                             color: ( // theme
                                                 Highcharts.defaultOptions.title.style &&
                                                 Highcharts.defaultOptions.title.style.color
-                                            ) || 'gray'
+                                            ) || 'black'
                                         }
                                         ,
                                         formatter: function () {
                                             let val = this.points[0]
-                                            console.log(this.cumulative)
-                                            var diff = this.points[0][1]-this.points[0][0]
-                                                return Math.round(100 - (100 * diff / this.total)) + '%';                                        
+                                            if (val !== undefined){
+                                            var diff = val[1]-val[0]
+                                                return Math.round(100 - (100 * diff / this.total)) + '%';
+                                            }
+                                                                                        
                                             }
                                     }
                                 },
@@ -415,7 +429,7 @@
                 })                 
             } 
         function getChild(url,e_url){
-            let final_data = [{name: 'Gaps', data: []}, {name: 'Achieved', data: []}]
+            let final_data = [{name: 'Gaps', data: [], color:'#f28f43'}, {name: 'Achieved', data: [],color:'#2f7ed8'}]
             let prev_val = 0
                 justFetch(e_url).then(data=>{
                     data.metaData.dimensions.dx.map((dx,dinx)=>{
@@ -468,7 +482,7 @@
                                             color: ( // theme
                                                 Highcharts.defaultOptions.title.style &&
                                                 Highcharts.defaultOptions.title.style.color
-                                            ) || 'gray'
+                                            ) || 'black'
                                         }
                                         ,
                                         formatter: function () {
@@ -509,7 +523,7 @@
                 })                 
             } 
         function getAdolesent(url,e_url){
-            let final_data = [{name: 'Gaps', data: []}, {name: 'Achieved', data: []}]
+            let final_data = [{name: 'Gaps', data: [], color:'#f28f43'}, {name: 'Achieved', data: [],color:'#2f7ed8'}]
             let prev_val = 0
                 justFetch(e_url).then(data=>{
                     data.metaData.dimensions.dx.map((dx,dinx)=>{
@@ -541,6 +555,7 @@
                         // series.data.push(val)
                         // final_data.push(series)
                     })
+                   
                     Highcharts.chart('adolesent', {
                                 chart: {
                                     type: 'column'
@@ -562,7 +577,7 @@
                                             color: ( // theme
                                                 Highcharts.defaultOptions.title.style &&
                                                 Highcharts.defaultOptions.title.style.color
-                                            ) || 'gray'
+                                            ) || 'black'
                                         }
                                         ,
                                         formatter: function () {
@@ -604,7 +619,7 @@
             } 
         function getOverall(url, e_url){
 
-            let final_data = [{name: 'Gaps', data: []}, {name: 'Achieved', data: []}]
+            let final_data = [{name: 'Gaps', data: [], color:'#f28f43'}, {name: 'Achieved', data: [],color:'#2f7ed8'}]
             let prev_val = 0
                 justFetch(e_url).then(data=>{
                     data.metaData.dimensions.dx.map((dx,dinx)=>{
@@ -657,7 +672,7 @@
                                             color: ( // theme
                                                 Highcharts.defaultOptions.title.style &&
                                                 Highcharts.defaultOptions.title.style.color
-                                            ) || 'gray'
+                                            ) || 'black'
                                         }
                                         ,
                                         formatter: function () {
@@ -699,7 +714,7 @@
             } 
         function getMale(url){
                 justFetch(url).then(data=>{
-                let final_data = [{name: 'Gaps', data: []}, {name: 'Achieved', data: []}]
+                let final_data = [{name: 'Gaps', data: [], color:'#f28f43'}, {name: 'Achieved', data: [],color:'#2f7ed8'}]
                 data.metaData.dimensions.dx.map((dx,dinx)=>{
                     let prev_val = 0
                     // let series = {}
@@ -736,7 +751,7 @@
                                         color: ( // theme
                                             Highcharts.defaultOptions.title.style &&
                                             Highcharts.defaultOptions.title.style.color
-                                        ) || 'gray'
+                                        ) || 'black'
                                     }
                                     ,
                                     formatter: function () {
@@ -779,7 +794,7 @@
         function getFemale(url){
 
                     justFetch(url).then(data=>{
-                    let final_data = [{name: 'Gaps', data: []}, {name: 'Achieved', data: []}]
+                    let final_data = [{name: 'Gaps', data: [], color:'#f28f43'}, {name: 'Achieved', data: [],color:'#2f7ed8'}]
                     data.metaData.dimensions.dx.map((dx,dinx)=>{
                         let prev_val = 0
                         // let series = {}
@@ -816,7 +831,7 @@
                                             color: ( // theme
                                                 Highcharts.defaultOptions.title.style &&
                                                 Highcharts.defaultOptions.title.style.color
-                                            ) || 'gray'
+                                            ) || 'black'
                                         }
                                         ,
                                         formatter: function () {
@@ -857,7 +872,7 @@
                 })                 
             } 
         function getYadult(url, e_url){
-            let final_data = [{name: 'Gaps', data: []}, {name: 'Achieved', data: []}]
+            let final_data = [{name: 'Gaps', data: [], color:'#f28f43'}, {name: 'Achieved', data: [],color:'#2f7ed8'}]
             let prev_val = 0
                 justFetch(e_url).then(data=>{
                     data.metaData.dimensions.dx.map((dx,dinx)=>{
@@ -910,7 +925,7 @@
                                             color: ( // theme
                                                 Highcharts.defaultOptions.title.style &&
                                                 Highcharts.defaultOptions.title.style.color
-                                            ) || 'gray'
+                                            ) || 'black'
                                         }
                                         ,
                                         formatter: function () {

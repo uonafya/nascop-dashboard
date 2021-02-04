@@ -90,7 +90,7 @@ const filter_template = `
                         <option value="" disabled selected>Year {{#is_period_range}} from {{/is_period_range}}</option>
                     </select>
                     
-                    <select class="form-control" multiple id="period-dropdownFromQs" disabled>
+                    <select class="form-control" id="period-dropdownFromQs" disabled>
                         <option value="" selected>All year</option>
                         <option value="01" >January</option>
                         <option value="02" >February</option>
@@ -190,11 +190,9 @@ $(document).ready(function () {
         let p_val = $("#period-dropdownFrom").val()
         let v_al = $(this).val();
         let v_alq = []
-        v_al.forEach(data => {
-            v_al1= $(this).val();
-            let finalpe = p_val+data
-            v_alq.push(finalpe)
-        });
+        let finalpe = p_val+v_al
+        v_alq.push(finalpe)
+    
         
 
         
@@ -235,7 +233,6 @@ $(document).ready(function () {
         // }
 
         let v_alq = p_val+v_al //""
-        console.log('kenyaaaa',v_alq)
         // if(v_al != null && v_al != ""){
         //     for (let d = 1; d <= parseFloat(v_al); d++) {
         //         v_alq += p_val+"Q"+d+";"
@@ -299,7 +296,7 @@ const getPeBtwnYears = (y1, y2, returntype) => {
     if(returntype && returntype == 'months'){
         let mnths = ''
         yrs.map(yr=>{
-            mnths += ''+gMonthsInYear(yr)+';'
+            mnths += ''+gMontwhsInYear(yr)+';'
         })
         return mnths
     } else if(returntype && returntype == 'weeks'){
@@ -339,7 +336,6 @@ let getDefaultPeriod = () =>{
     for (let c = 1; c <= qt; c++) {
         dp += yr+'Q'+c+';'
     }
-    console.log('hahah',dp)
     return dp
 }
 
