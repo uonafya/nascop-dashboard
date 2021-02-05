@@ -154,7 +154,6 @@ function dateRange(startDate, endDate) {
     return dates.join(';');
 }
 
-console.log( 'testing dateRange(201801,201912) = '+dateRange(201801,201912) );
 
 const munchHash = (hash) => {
     let tt = hash.split("&").reduce((rs, itm) => {
