@@ -126,6 +126,36 @@ let justFetch = async (endpoint, postoptions) => {
     }
 };
 
+function dateRange(startDate, endDate) {
+    startDate = startDate+''
+    endDate = endDate+''
+    var start      = startDate.substr(4)     // startDate.split('-');
+    var end        = endDate.substr(4)   // endDate.split('-');
+    var startYear  = parseInt(
+        startDate.substring(0,4)
+        // start[0]
+    );
+    var endYear    = parseInt(
+        endDate.substring(0,4)
+        // end[0]
+    );
+    var dates      = [];
+
+    for(var i = startYear; i <= endYear; i++) {
+        var endMonth = i != endYear ? 11 : parseInt(end[1]) - 1;
+        var startMon = i === startYear ? parseInt(start[1])-1 : 0;
+        for(var j = startMon; j <= endMonth; j = j > 12 ? j % 12 || 11 : j+1) {
+            var month = j+1;
+            var displayMonth = month < 10 ? '0'+month : month;
+            // dates.push([i, displayMonth, '01'].join('-'));
+            dates.push(i+''+displayMonth)
+        }
+    }
+    return dates.join(';');
+}
+
+console.log( 'testing dateRange(201801,201912) = '+dateRange(201801,201912) );
+
 const munchHash = (hash) => {
     let tt = hash.split("&").reduce((rs, itm) => {
         let pt = itm.split("=");

@@ -320,6 +320,7 @@ const getPeBtwnYears = (y1, y2, returntype) => {
         return yrs
     }
 }
+
 let getDefaultPeriod = () =>{
     let yr = new Date().getFullYear();
     let mn = parseFloat(new Date().getMonth())+1
@@ -346,8 +347,8 @@ const getQuartersInYear = yr => {
     return ''+yr+'Q1;'+yr+'Q2;'+yr+'Q3;'+yr+'Q4';
 }
 
-function changeHashOnFilter(new_param){ //new_param = {ou: 'Hfvgj5...'} OR {pe: '2020W12'}
 
+function changeHashOnFilter(new_param){ //new_param = {ou: 'Hfvgj5...'} OR {pe: '2020W12'}
     let curr_hash = window.location.hash.substr(1)
     let curr_hash_obj = munchHash(curr_hash)
     let newHash = {}

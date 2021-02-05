@@ -190,7 +190,6 @@
                
                 // let org_unit = window.sessionStorage.getItem('ess_ou') || "HfVjCurKxh2"
                 let org_unit = "HfVjCurKxh2"
-
                 if(prop && prop.ou){
                     org_unit = prop.ou
                 }
@@ -198,6 +197,10 @@
                 if(prop && prop.pe){
                     prd = prop.pe
                 }
+                if(prop && prop.pe && prop.pe_to){
+                    prd = dateRange(prop.pe, prop.pe_to)
+                }
+                console.log('prd = = = '+prd);
 
                 let ouFilterType = window.sessionStorage.getItem("ouFilterType") || "national"
                 var finalpe =prd.replace(/,/g, ';');
@@ -209,7 +212,6 @@
                 
 
                 
-
                 let ancascade = `https://hiskenya.org/api/26/analytics.json?dimension=ou:${org_unit}&dimension=dx:Fz0LzxMT1vV;uSxBUWnagGg;i5jVVTm1vI8;pct05jgGcLt;xNTM673ne69;KsxPBOVAyjJ;ivtLMB7qdKg;xvUt174iyYS;kU5ew70I7kj;vlme3PThHl1;AlWRnztxhOU;KMy83Jn1QgO;VsRrzNMda22;cmeMfuPL3VL;qp8WQXmWtnr;MHmKiukySbZ;ArG6zbCMBr2;RsYvCg0aeuZ&filter=pe:${finalpe}&displayProperty=NAME`
                 let estimated_pmtct= `https://hiskenya.org/api/26/analytics.json?dimension=ou:${org_unit}&dimension=dx:ZH8BGmU9SHJ&filter=pe:${yr}&displayProperty=NAME`
                 // let data = fetchdata(ancascade)
