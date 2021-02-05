@@ -389,7 +389,7 @@ const fetchSubcounties = county_id => {
         arr_of_counties.push(county_id)
     }
     arr_of_counties.map(c_id=>{
-        justFetch(`https://41.89.64.12/dhis/api/organisationUnits/${c_id}.json?includeChildren=true&fields=id,name`, {})
+        justFetch(`https://hiskenya.org/api/organisationUnits/${c_id}.json?includeChildren=true&fields=id,name`, {})
         .then(response=>{
             if( response.error ){
                 throw JSON.stringify(response)
