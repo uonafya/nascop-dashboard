@@ -347,7 +347,6 @@
                             final_data[1].data.push(val)
                     })
                 })
-                console.log('final', final_data)
          
                 justFetch(url).then(data=>{
                     data.metaData.dimensions.dx.map((dx,dinx)=>{
@@ -365,14 +364,25 @@
                         // final_data.push(series)
                         
                     })
+                    var periodname = []
+                    data.metaData.dimensions.pe.map(pe=>{
+                        periodname.push(data.metaData.items[pe].name)
+                        
+                    })
+                    var fperiodname = periodRange()
+                    function periodRange() {  
+                    let finalperiodname = []
+                    finalperiodname.push(periodname[0]); 
+                    finalperiodname.push(periodname[periodname.length-1]);  
                     
-                    console.log("data =1111 ", JSON.stringify(final_data));
+                    return finalperiodname
+                    } 
                     Highcharts.chart('adult', {
                                 chart: {
                                     type: 'column'
                                 },
                                 title: {
-                                    text: 'Kenya Adult Coverage CASCADE'
+                                    text: fperiodname[1]
                                 },
                                 xAxis: {
                                     categories: ['ALHIV', 'Adults Currently on Care ', 'Adults Currently on ART', 'Adults showing viral load suppression']//Array.from(final_data, f=>f.name)
@@ -445,6 +455,7 @@
                     })
                     
                 })
+                
          
                 justFetch(url).then(data=>{
                     data.metaData.dimensions.dx.map((dx,dinx)=>{
@@ -461,12 +472,26 @@
                         // series.data.push(val)
                         // final_data.push(series)
                     })
+
+                    var periodname = []
+                    data.metaData.dimensions.pe.map(pe=>{
+                        periodname.push(data.metaData.items[pe].name)
+                        
+                    })
+                    var fperiodname = periodRange()
+                    function periodRange() {  
+                    let finalperiodname = []
+                    finalperiodname.push(periodname[0]); 
+                    finalperiodname.push(periodname[periodname.length-1]);  
+                    
+                    return finalperiodname
+                    }
                     Highcharts.chart('child', {
                                 chart: {
                                     type: 'column'
                                 },
                                 title: {
-                                    text: 'Kenya Children Coverage CASCADE'
+                                    text: fperiodname[1]
                                 },
                                 xAxis: {
                                     categories: ['CLHIV', 'Children Currently on Care', 'Children Currently on ART','Children showing viral load suppression']//Array.from(final_data, f=>f.name)
@@ -555,13 +580,25 @@
                         // series.data.push(val)
                         // final_data.push(series)
                     })
-                   
+                    var periodname = []
+                    data.metaData.dimensions.pe.map(pe=>{
+                        periodname.push(data.metaData.items[pe].name)
+                        
+                    })
+                    var fperiodname = periodRange()
+                    function periodRange() {  
+                    let finalperiodname = []
+                    finalperiodname.push(periodname[0]); 
+                    finalperiodname.push(periodname[periodname.length-1]);  
+                    
+                    return finalperiodname
+                    }
                     Highcharts.chart('adolesent', {
                                 chart: {
                                     type: 'column'
                                 },
                                 title: {
-                                    text: 'Kenya Adolesent Coverage CASCADE'
+                                    text: fperiodname[1]
                                 },
                                 xAxis: {
                                     categories: ['aLHIV', 'Adolosents Currently on Care','Adolesents Currently on ART', 'Adolosents Showing Viral Load Suppression']//Array.from(final_data, f=>f.name)
@@ -651,12 +688,25 @@
                         // series.data.push(val)
                         // final_data.push(series)
                     })
+                    var periodname = []
+                    data.metaData.dimensions.pe.map(pe=>{
+                        periodname.push(data.metaData.items[pe].name)
+                        
+                    })
+                    var fperiodname = periodRange()
+                    function periodRange() {  
+                    let finalperiodname = []
+                    finalperiodname.push(periodname[0]); 
+                    finalperiodname.push(periodname[periodname.length-1]);  
+                    
+                    return finalperiodname
+                    }
                     Highcharts.chart('overall', {
                                 chart: {
                                     type: 'column'
                                 },
                                 title: {
-                                    text: 'Kenya Overall Coverage CASCADE'
+                                    text: fperiodname[1]
                                 },
                                 xAxis: {
                                     categories: ['PLHIV', 'Overall Currently on Care ', 'Overall Currently on ART', 'Overall showing viral load suppression']//Array.from(final_data, f=>f.name)
@@ -730,12 +780,25 @@
                     // series.data.push(val)
                     // final_data.push(series)
                 })
+                var periodname = []
+                    data.metaData.dimensions.pe.map(pe=>{
+                        periodname.push(data.metaData.items[pe].name)
+                        
+                    })
+                    var fperiodname = periodRange()
+                    function periodRange() {  
+                    let finalperiodname = []
+                    finalperiodname.push(periodname[0]); 
+                    finalperiodname.push(periodname[periodname.length-1]);  
+                    
+                    return finalperiodname
+                    }
                 Highcharts.chart('', {
                             chart: {
                                 type: 'column'
                             },
                             title: {
-                                text: 'Kenya Male Coverage CASCADE'
+                                text: fperiodname[1]
                             },
                             xAxis: {
                                 categories: ['MLHIV', 'Males Currently on Care ', 'Males Currently on ART','Male showing viral load suppression']//Array.from(final_data, f=>f.name)
@@ -810,12 +873,26 @@
                         // series.data.push(val)
                         // final_data.push(series)
                     })
+
+                    var periodname = []
+                    data.metaData.dimensions.pe.map(pe=>{
+                        periodname.push(data.metaData.items[pe].name)
+                        
+                    })
+                    var fperiodname = periodRange()
+                    function periodRange() {  
+                    let finalperiodname = []
+                    finalperiodname.push(periodname[0]); 
+                    finalperiodname.push(periodname[periodname.length-1]);  
+                    
+                    return finalperiodname
+                    }
                     Highcharts.chart('', {
                                 chart: {
                                     type: 'column'
                                 },
                                 title: {
-                                    text: 'Kenya Female Coverage CASCADE'
+                                    text: fperiodname[1]
                                 },
                                 xAxis: {
                                     categories: ['FLHIV', 'Females Currently on Care ', 'Females Currently on ART','Females showing viral load suppression']//Array.from(final_data, f=>f.name)
@@ -904,12 +981,26 @@
                         // series.data.push(val)
                         // final_data.push(series)
                     })
+
+                    var periodname = []
+                    data.metaData.dimensions.pe.map(pe=>{
+                        periodname.push(data.metaData.items[pe].name)
+                        
+                    })
+                    var fperiodname = periodRange()
+                    function periodRange() {  
+                    let finalperiodname = []
+                    finalperiodname.push(periodname[0]); 
+                    finalperiodname.push(periodname[periodname.length-1]);  
+                    
+                    return finalperiodname
+                    }
                     Highcharts.chart('yadult', {
                                 chart: {
                                     type: 'column'
                                 },
                                 title: {
-                                    text: 'Kenya Young Adults Coverage CASCADE'
+                                    text: fperiodname[1]
                                 },
                                 xAxis: {
                                     categories: ['YALHIV', 'Young Adults Currently on Care', 'Young Adults Currently on ART', 'Young Adults showing viral load suppression']//Array.from(final_data, f=>f.name)

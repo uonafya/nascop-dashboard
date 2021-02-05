@@ -261,6 +261,19 @@
 
                     var theorgunit = response.metaData.dimensions.ou[0];
                     var curorg = response.metaData.items[theorgunit].name;
+                    var periodname = []
+                    response.metaData.dimensions.pe.map(pe=>{
+                        periodname.push(response.metaData.items[pe].name)
+                        
+                    })
+                    var fperiodname = periodRange()
+                    function periodRange() {  
+                    let finalperiodname = []
+                    finalperiodname.push(periodname[0]); 
+                    finalperiodname.push(periodname[periodname.length-1]);  
+                    
+                    return finalperiodname
+                    } 
 
                     //convert dictionary to array by extracting values only
                     reached_values = Object.keys(reached).map(function (key) {
@@ -279,7 +292,7 @@
                                 type: 'bar'
                             },
                             title: {
-                                text: response.metaData.items[response.metaData.dimensions.pe[0]].name+'--ANC CASCADE --'+curorg
+                                text: fperiodname[0] +' - '+fperiodname[1]+' '+curorg
                             },
                             xAxis: {
                                 categories: ['Expected Pregnancies', 'First ANC Visit','Known HIV status at ANC','Testing for Syphilis', 'Pregnant women completing 4 ANC visit', 'Skilled Deliveries'  ]
@@ -376,8 +389,22 @@
                     var theorgunit = res[0].metaData.dimensions.ou[0];
                     var curorg = res[0].metaData.items[theorgunit].name;
 
+                    var periodname = []
+                    response1.metaData.dimensions.pe.map(pe=>{
+                        periodname.push(response1.metaData.items[pe].name)
+                        
+                    })
+                    var fperiodname = periodRange()
+                    function periodRange() {  
+                    let finalperiodname = []
+                    finalperiodname.push(periodname[0]); 
+                    finalperiodname.push(periodname[periodname.length-1]);  
                     
-                    console.log(res[0].metaData.items[res[0].metaData.dimensions.pe[0]].name)
+                    return finalperiodname
+                    } 
+
+                    
+                   
                     
                     //convert dictionary to array by extracting values only
                     reached_values = Object.keys(reached).map(function (key) {
@@ -394,7 +421,7 @@
                                 type: 'bar'
                             },
                             title: {
-                                text: 'Maternal HIV Cascade'
+                                text: fperiodname[0] +' - '+fperiodname[1]+' '+curorg
                             },
                             xAxis: {
                                 categories: ['Need for PMTCT', 'PMTCT Positives', 'Maternal HAART', 'Infant Prophylaxis','Delivery to HIV+ Mothers' ]

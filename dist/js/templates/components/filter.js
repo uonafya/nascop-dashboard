@@ -211,13 +211,13 @@ $(document).ready(function () {
         changeHashOnFilter({pe:v_alq})
         $('#period-dropdownToQs').removeAttr('disabled')
     })
-    $("#period-dropdownTo").on('change', function (ev) {
-        let v_al = $(this).val();
-        let v_al_fr = $('#period-dropdownFrom').val();
-        if(v_al.includes('/')){ v_al = v_al.replace('/', 'W') }
-        if(v_al_fr.includes('/')){ v_al_fr = v_al_fr.replace('/', 'W') }
-        changeHashOnFilter({pe: v_al_fr, pe_to:v_al})
-    })
+    // $("#period-dropdownTo").on('change', function (ev) {
+    //     let v_al = $(this).val();
+    //     let v_al_fr = $('#period-dropdownFrom').val();
+    //     if(v_al.includes('/')){ v_al = v_al.replace('/', 'W') }
+    //     if(v_al_fr.includes('/')){ v_al_fr = v_al_fr.replace('/', 'W') }
+    //     changeHashOnFilter({pe: v_al_fr, pe_to:v_al})
+    // })
     $("#period-dropdownToQs").on('change', function (ev) {
         let p_val = $("#period-dropdownTo").val()
         let v_al = $(this).val();
