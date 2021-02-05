@@ -8,7 +8,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <!-- Favicon icon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/index.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/nascop-logo.png" />
         <title>
            Home | Nascop Dashboard
         </title>
@@ -53,7 +53,7 @@
                         <div class="col-md-12 p-0" id="loading_target"> </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12" >
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">ANC Cascade</h4>
@@ -155,7 +155,7 @@
             <!-- render Fn -->
             <script>
                 function renderAll() {
-                    let page_title = {title: 'Nascop Indicator dashboard'}
+                    let page_title = {title: 'NASCOP PMTCT Cascades'}
                     let page_filters = {
                         is_county:true, 
                         is_subcounty:false, 
@@ -167,7 +167,7 @@
                     let footer_yr = { yr: new Date().getFullYear()}
                     let page_status = {title: '', message: '', type: 'info', hidden: true} //type: info, success, danger
 
-                    // renderNav()
+                    renderNav()
                     renderHeader(page_title)
                     renderFooter(footer_yr)
                     renderLoader(is_loading)
@@ -187,146 +187,350 @@
         <!-- ++++++++++++++++++++++++ PAGE DATA LOGIC ++++++++++++++++++++++++ -->
         <script>
             window.fetchData = (prop) => {
+               
                 // let org_unit = window.sessionStorage.getItem('ess_ou') || "HfVjCurKxh2"
                 let org_unit = "HfVjCurKxh2"
-                // let org_unit = "vvOK1BxTbet;HfVjCurKxh2;KGHhQ5GLd4k;Tvf1zgVZ0K4;MqnLxQBigG0;PFu8alU2KWG;uyOrcHZBpW0;nK0A12Q7MvS"   //"HfVjCurKxh2"
+
                 if(prop && prop.ou){
                     org_unit = prop.ou
                 }
-                let prd = getDefaultPeriod()
+                let prd = `LAST_YEAR`
                 if(prop && prop.pe){
-                    prd = getQuartersInYear(prop.pe)
+                    prd = prop.pe
                 }
-                if(prop && prop.pe_to){
-                    prd = getPeBtwnYears(prop.pe, prop.pe_to, 'quarters')
-                }
-                let ouFilterType = window.sessionStorage.getItem("ouFilterType") || "national"
-                
-                
-               
-            getAnc()
-            getMaternal()
-            getInfant()
 
+                let ouFilterType = window.sessionStorage.getItem("ouFilterType") || "national"
+                var finalpe =prd.replace(/,/g, ';');
+                if (finalpe == `LAST_YEAR`){
+                    var yr = `LAST_YEAR`
+                }else{
+                    var yr = finalpe.substring(0,4)
+                }
+                
+
+                
+
+                let ancascade = `https://hiskenya.org/api/26/analytics.json?dimension=ou:${org_unit}&dimension=dx:Fz0LzxMT1vV;uSxBUWnagGg;i5jVVTm1vI8;pct05jgGcLt;xNTM673ne69;KsxPBOVAyjJ;ivtLMB7qdKg;xvUt174iyYS;kU5ew70I7kj;vlme3PThHl1;AlWRnztxhOU;KMy83Jn1QgO;VsRrzNMda22;cmeMfuPL3VL;qp8WQXmWtnr;MHmKiukySbZ;ArG6zbCMBr2;RsYvCg0aeuZ&filter=pe:${finalpe}&displayProperty=NAME`
+                let estimated_pmtct= `https://hiskenya.org/api/26/analytics.json?dimension=ou:${org_unit}&dimension=dx:ZH8BGmU9SHJ&filter=pe:${yr}&displayProperty=NAME`
+                // let data = fetchdata(ancascade)
+                getAnc(ancascade)
+                getMaternal(ancascade,estimated_pmtct)
+                // getInfant()
 
             
         }
 
-            function getAnc(){
-                Highcharts.chart('anc', {
+            function getAnc(url){
+                //dictionaries used to maintain order of the values
+                //indicators for reached anc
+                let reached = {
+                    'pct05jgGcLt': 'Estimated Number of Pregnant Women',
+                    'uSxBUWnagGg': 'MOH 731 1st ANC Visits HV02-01',
+                    'vlme3PThHl1': 'Number tested for HIV at ANC',
+                    'i5jVVTm1vI8': 'MOH 731 Syphilis Screened_1st ANC HV02-24',
+                    'Fz0LzxMT1vV': 'Pregnant women completing 4 ANC visits',
+                    'KsxPBOVAyjJ': 'Delivery to HIV+ Mothers'
+                };
+
+                //indicators for missed opportunities
+                let missed = {
+                    'placeholder2': 0,
+                    'placeholder1': 0,
+                    'AlWRnztxhOU': 'Number tested for HIV at ANC Missed Opportunity',
+                    'xNTM673ne69': 'ANC Testing for Syphilis Missed Opportunity',
+                    'qp8WQXmWtnr': 'Pregnant women completing 4 ANC visits missed opportunities',
+                    'ivtLMB7qdKg': 'Delivery to HIV+ Mothers Missed Opportunity'
+   
+                }
+                //unlabelled values to plot
+                let reached_values = [];
+                let missed_values = [];
+                let unreached_values = [];
+            justFetch(url, {})
+                .then(response=>{
+                    response.rows.map( row => {
+                            if(row[0] in reached) {
+                                reached[row[0]] = parseInt(row[2]);
+                            } else if(row[0] in missed){
+                                missed[row[0]] = parseInt(row[2]);
+                            }
+                        }
+                    );
+
+                    var theorgunit = response.metaData.dimensions.ou[0];
+                    var curorg = response.metaData.items[theorgunit].name;
+
+                    //convert dictionary to array by extracting values only
+                    reached_values = Object.keys(reached).map(function (key) {
+                        return reached[key];
+                    });
+                    missed_values = Object.keys(missed).map(function (key) {
+                        return missed[key];
+                    });
+
+                    const unreached = reached_values[0] - reached_values[1];
+                    unreached_values = [0, unreached, unreached, unreached, unreached,unreached];
+
+                    //plot the charts
+                    Highcharts.chart('anc', {
                             chart: {
                                 type: 'bar'
                             },
                             title: {
-                                text: 'ANC CASCADE'
+                                text: response.metaData.items[response.metaData.dimensions.pe[0]].name+'--ANC CASCADE --'+curorg
                             },
                             xAxis: {
-                                categories: ['pregnant women completing 4 ANC visits', 'Testing for Syphilis', 'Number tested for HIV at ANC', 'First ANC Visit', 'Expected Pregnancies']
+                                categories: ['Expected Pregnancies', 'First ANC Visit','Known HIV status at ANC','Testing for Syphilis', 'Pregnant women completing 4 ANC visit', 'Skilled Deliveries'  ]
                             },
                             yAxis: {
                                 min: 0,
                                 title: {
-                                    text: 'Population Number'
+                                    text: 'Maternal Population'
                                 }
                             },
                             legend: {
                                 reversed: true
                             },
                             plotOptions: {
-                                series: {
-                                    stacking: 'normal'
-                                }
-                            },
+                                    series: {
+                                        dataLabels: {
+                                            enabled: true,
+                                            align: 'center',
+                                            color: '#FFFFFF'
+                                        },
+                                        stacking: 'normal'
+
+                                    }
+                                },
                             series: [{
-                                
                                 name: 'Unreached Mothers',
-                                data: [70559, 70559, 70559, 70559, 0]
+                                data: unreached_values,
+                                color:'#615e5d'
                             }, {
                                 name: 'Missed Opportunities',
-                                data: [150016, 60712, 12001, 0, 0]
+                                data: missed_values,
+                                color:'#f28f43'
                             }, {
                                 name: 'Reached Mothers',
-                                data: [204740, 294044, 342755, 354756, 425315]
+                                data: reached_values,
+                                color:'#2f7ed8'
                             }]
                         });
-                                        
+
+                });
             }
-            function getMaternal(){
+
+            function getMaternal(url,e_url){ 
+                let reached = {
+                    'ZH8BGmU9SHJ': 'Need for PMTCT',
+                    'VsRrzNMda22': 'PMTCT Total Positive',
+                    'ArG6zbCMBr2': 'Total Maternal HAART',
+                    'KMy83Jn1QgO': 'PMTCT Infant Prophylaxis',
+                    'KsxPBOVAyjJ': 'Delivery to HIV+ Mothers'
+                };
+
+                //indicators for missed opportunities
+                let missed = {
+                    'placeholder2': 0,
+                    'placeholder1': 0,
+                    'kU5ew70I7kj': 'Maternal HAART Missed Opportunities',
+                    'xvUt174iyYS': 'Infant Prophylaxis Missed Opportunity',
+                    'ivtLMB7qdKg': 'Delivery to HIV+ Mothers Missed Opportunity'
+   
+                }
+                //unlabelled values to plot
+                let reached_values = [];
+                let missed_values = [];
+                let unreached_values = [];
+                var res = []
+
+                console.log('url',url)
+
+                console.log('eurl',e_url)
+            justFetch(url, {})
+                .then(response1=>{                    
+                    justFetch(e_url,{})
+                    .then(response2=>{                    
+                    res.push(response1)
+                    res = [...res,response2]
+                    res[0].rows.map( row => {
+                            if(row[0] in reached) {
+                                reached[row[0]] = parseInt(row[2]);
+                            } else if(row[0] in missed){
+                                missed[row[0]] = parseInt(row[2]);
+                            }
+                        }
+                    );
+                    res[1].rows.map( row => {
+                            if(row[0] in reached) {
+                                reached[row[0]] = parseInt(row[2]);
+                            } else if(row[0] in missed){
+                                missed[row[0]] = parseInt(row[2]);
+                            }
+                        }
+                    );
+                
+                    
+                    var theorgunit = res[0].metaData.dimensions.ou[0];
+                    var curorg = res[0].metaData.items[theorgunit].name;
+
+                    
+                    console.log(res[0].metaData.items[res[0].metaData.dimensions.pe[0]].name)
+                    
+                    //convert dictionary to array by extracting values only
+                    reached_values = Object.keys(reached).map(function (key) {
+                        return reached[key];
+                    });
+                    missed_values = Object.keys(missed).map(function (key) {
+                        return missed[key];
+                    });
+
+                    const unreached = reached_values[0] - reached_values[1];
+                    unreached_values = [0, reached_values[0] - reached_values[1], unreached, unreached, unreached];
                 Highcharts.chart('Maternal', {
                             chart: {
                                 type: 'bar'
                             },
                             title: {
-                                text: 'Stacked bar chart'
+                                text: 'Maternal HIV Cascade'
                             },
                             xAxis: {
-                                categories: ['Delivery from HIV+ mothers', 'Infant Prophylaxis', 'Maternal HAART', 'PMTCT positive', 'In need of PMTCT']
+                                categories: ['Need for PMTCT', 'PMTCT Positives', 'Maternal HAART', 'Infant Prophylaxis','Delivery to HIV+ Mothers' ]
                             },
                             yAxis: {
                                 min: 0,
                                 title: {
-                                    text: 'Population Number'
+                                    text: 'Maternal Population'
                                 }
                             },
                             legend: {
                                 reversed: true
                             },
                             plotOptions: {
-                                series: {
-                                    stacking: 'normal'
-                                }
-                            },
+                                    series: {
+                                        dataLabels: {
+                                            enabled: true,
+                                            align: 'center',
+                                            color: '#FFFFFF'
+                                        },
+                                        stacking: 'normal'
+                                    
+                                    }
+                                },
                             series: [{
                                 name: 'Unreached Mothers',
-                                data: [-110, -110, -110, -110, 0]
+                                data: unreached_values,
+                                color:'#615e5d'
                             }, {
                                 name: 'Missed Opportunities',
-                                data: [7754, 2322, 5934, 0, 0]
+                                data: missed_values,
+                                color:'#f28f43'
                             }, {
                                 
                                 name: 'Reached Mothers',
-                                data: [9730, 15162, 11550, 17484, 17374]
+                                data: reached_values,
+                                color:'#2f7ed8'
                             }]
                         });
+                    })
+                
+            });
                                         
             }
-            function getInfant(){
+            function getInfant(url){
+                let reached = {
+                    'pct05jgGcLt': 'Estimated Number of Pregnant Women',
+                    'uSxBUWnagGg': 'MOH 731 1st ANC Visits HV02-01',
+                    'vlme3PThHl1': 'Number tested for HIV at ANC',
+                    'i5jVVTm1vI8': 'MOH 731 Syphilis Screened_1st ANC HV02-24',
+                    'Fz0LzxMT1vV': 'Pregnant women completing 4 ANC visits'
+                };
+
+                //indicators for missed opportunities
+                let missed = {
+                    'placeholder2': 0,
+                    'placeholder1': 0,
+                    'AlWRnztxhOU': 'Number tested for HIV at ANC Missed Opportunity',
+                    'xNTM673ne69': 'ANC Testing for Syphilis Missed Opportunity',
+                    'qp8WQXmWtnr': 'Pregnant women completing 4 ANC visits missed opportunities'
+   
+                }
+                //unlabelled values to plot
+                let reached_values = [];
+                let missed_values = [];
+                let unreached_values = [];
+            justFetch(url, {})
+                .then(response=>{
+                    console.log(url)
+                    response.rows.map( row => {
+                            if(row[0] in reached) {
+                                reached[row[0]] = parseInt(row[2]);
+                            } else if(row[0] in missed){
+                                missed[row[0]] = parseInt(row[2]);
+                            }
+                        }
+                    );
+                    
+                    var theorgunit = response.metaData.dimensions.ou[0];
+                    var curorg = response.metaData.items[theorgunit].name;
+
+                    
+                    console.log(response.metaData.items[response.metaData.dimensions.pe[0]].name)
+                    
+                    //convert dictionary to array by extracting values only
+                    reached_values = Object.keys(reached).map(function (key) {
+                        return reached[key];
+                    });
+                    missed_values = Object.keys(missed).map(function (key) {
+                        return missed[key];
+                    });
+
+                    const unreached = reached_values[0] - reached_values[1];
+                    unreached_values = [0, unreached, unreached, unreached, unreached];
                 Highcharts.chart('Infant', {
                             chart: {
                                 type: 'bar'
                             },
                             title: {
-                                text: 'Stacked bar chart'
+                                text: 'Infant HIV Cascade'
                             },
                             xAxis: {
-                                categories: ['Under 1 starting ART', 'PCR positive', 'PCR within two months', 'First PCR done', 'PMTCT positive','In need of PMTCT']
+                                categories: ['Neonatal PMTCT','Positive Pg & Br', '1st PCR', 'PCR Within Two Months', 'PCR Positived', 'Under 1 Starting ART']
                             },
                             yAxis: {
                                 min: 0,
                                 title: {
-                                    text: 'Population Number'
+                                    text: 'Maternal Population'
                                 }
                             },
                             legend: {
                                 reversed: true
                             },
                             plotOptions: {
-                                series: {
-                                    stacking: 'normal'
-                                }
-                            },
+                                    series: {
+                                        dataLabels: {
+                                            enabled: true,
+                                            align: 'center',
+                                            color: '#FFFFFF'
+                                        },
+                                        stacking: 'normal'
+                                    
+                                    }
+                                },
                             series: [{
                                 name: 'Unreached Infants',
-                                data: [0, 0, -110, -110, -110,0]
+                                data: [0, 0,0,-110, -110, -110]
                                 
                             }, {
                                 name: 'Missed Opportunity',
-                                data: [167, 0, 6426, 1956, 0, 0]
+                                data: [0,0,1956,6426,0,167]
                             }, {
                                 name: 'Reached Infants',
-                                data: [291, 458, 11058, 15528, 17484, 17374]
+                                data: [17374,17484,15528,11058,458,291]
                             }]
                         });
+                
+            });
                                         
             }
         </script>
