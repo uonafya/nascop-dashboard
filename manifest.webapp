@@ -1,6 +1,6 @@
 {
-    "version": "1.1.5",
-    "name": "HIV Cascade Dashboard ",
+    "version": "1.2.2",
+    "name": "Cascades Dashboard ",
     "description": "An App to Visualize Nascop indicators",
     "launch_path": "html/index.html",
     "appType": "APP",
@@ -8,7 +8,7 @@
         "48": "assets/images/index.png"
     },
     "developer": {
-        "name": "NASCOP",
+        "name": "HealthIT",
         "url": ""
     },
     "default_locale": "en",
