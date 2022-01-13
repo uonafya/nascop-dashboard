@@ -202,6 +202,153 @@ const sumArr = (array) => {
     });
     return sum_total;
 };
+function drawSpines(cName,cTitle,periodname,fperiodname,mechanismName,dataToPlot,stacking,yAxis,achievement){
+    // console.log(dataToPlot)
+    Highcharts.chart(cName, {
+    title: {
+        text: cTitle
+    },
+    subtitle: {
+        text: fperiodname[0] +' - '+fperiodname[1]+' '+mechanismName
+    },
+    
+    xAxis: {
+        categories: periodname
+    },
+    yAxis: [{ // Primary yAxis
+        labels: {
+            format: '{value}',
+            style: {
+                color: Highcharts.getOptions().colors[1]
+            }
+        },
+        title: {
+            text: 'Number ',
+            style: {
+                color: Highcharts.getOptions().colors[1]
+            }
+        }
+    }, { // Secondary yAxis
+        title: {
+            text: yAxis,
+            style: {
+                color: Highcharts.getOptions().colors[0]
+            }
+        },
+        labels: {
+            format: '{value} ',
+            style: {
+                color: Highcharts.getOptions().colors[0]
+            }
+        },
+        opposite: true
+    }],
+    plotOptions: {
+        // series: {
+        //     dataLabels: {
+        //         enabled: true,
+        //         // inside: true
+        //     }
+        // },
+        column: {
+        stacking: stacking,
+        pointPadding: 0.2,
+        borderWidth: 0
+        }
+    },
+
+    series: [{
+        name: dataToPlot[0].name,
+        type: dataToPlot[0].type,
+        data: dataToPlot[0].data,
+        tooltip: {
+            valueSuffix: ''
+        }
+
+    }, {
+        name: dataToPlot[1].name,
+        type: dataToPlot[1].type,
+        data: dataToPlot[1].data,
+        tooltip: {
+            valueSuffix: ' '
+        }
+
+    },{
+        name: "Achievement",
+        type: 'spline',
+        yAxis: 1,
+        data: achievement,
+        tooltip: {
+            valueSuffix: '%'
+        }
+    }]
+});
+}
+
+function periodRange(periodName) {
+    let finalperiodName = []
+    finalperiodName.push(periodName[0]);
+    finalperiodName.push(periodName[periodName.length - 1]);
+
+    return finalperiodName
+}
+
+function drawPie(cName, cTitle,dataToPlot, periodname, fperiodname, curorg, colo){
+    // console.log(dataToPlot)
+    // Highcharts.setOptions({
+    //     colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']
+    // });
+    Highcharts.chart(cName, {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: cTitle
+        },
+        subtitle: {
+            text: fperiodname[0] +' - '+fperiodname[1]+' '+curorg
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false,
+                    // format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                },
+                showInLegend: true
+            }
+        },
+        series: [{
+            name: 'Percentage',
+            colorByPoint: true,
+            data: [{
+                name: dataToPlot[0].name,
+                y: dataToPlot[0].y,
+                color: '#434348'
+            },
+            {
+                name: dataToPlot[1].name,
+                y: dataToPlot[1].y,
+                sliced: true,
+                selected: true,
+                color: '#7cb5ec'
+            }]
+        }], 
+        color: colo
+    });
+}
 
 $(document).ready(function () {
     setTimeout(() => {

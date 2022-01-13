@@ -1,6 +1,6 @@
 const footer_template = `
 <footer class="footer text-center">
-    All Rights Reserved. National Vaccine &amp; Immunization Programme &copy;
+    All Rights Reserved. National AIDS/STI Control Programme (NASCOP) &copy;
     {{yr}}
 </footer>
 `

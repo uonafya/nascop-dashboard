@@ -53,53 +53,122 @@
                         <div class="col-md-12 p-0" id="loading_target"> </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12" >
+                        <div class="col-md-6" >
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">ANC Cascade</h4>
+                                    <h4 class="card-title">Target Vs Results</h4>
+                                    <div class="graph" id="anc_target">
+                                        <p class="card-text"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" >
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Proportion of expectant women attending 1st ANC </h4>
                                     <div class="graph" id="anc">
                                         <p class="card-text"></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6" >
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Maternal HIV Cascade</h4>
-                                    <div class="graph" id="Maternal">
-                                        
+                                    <h4 class="card-title">Target Vs Results</h4>
+                                    <div class="graph" id="syphilis_target">
+                                        <p class="card-text"></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6" >
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title"> Proportion of pregnant women tested for Syphilis </h4>
+                                    <div class="graph" id="syphilis">
+                                        <p class="card-text"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6" >
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Infant HIV Cascade</h4>
-                                    <div class="graph" id="Infant">
-                                        
+                                    <h4 class="card-title">Target Vs Results</h4>
+                                    <div class="graph" id="haart_target">
+                                        <p class="card-text"></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6" >
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title"> Proportion of HIV infected pregnant and breastfeeding women on HAART </h4>
+                                    <div class="graph" id="haart">
+                                        <p class="card-text"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
-                    <!-- <div class="row">
-                        <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6" >
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">% Congruence between sources of immunization data between : Immunisation register vs. DHIS2</h4>
-                                    <div class="graph" id="immunizationmr">
-                                        <p class="card-text">tables Comparing counties , subcounties and quaters. In this case lets have one table that will have all discrepancy between sources of immunization data</p>
+                                    <h4 class="card-title">Target Vs Results</h4>
+                                    <div class="graph" id="hei_target">
+                                        <p class="card-text"></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div> -->
+                        <div class="col-md-6" >
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title"> Proportion of HIV Exposed Infants on Infant ARV Prophylaxis</h4>
+                                    <div class="graph" id="hei">
+                                        <p class="card-text"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6" >
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Target Vs Results</h4>
+                                    <div class="graph" id="pcr_target">
+                                        <p class="card-text"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" >
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title"> Percentage  of HIV Exposed infants receiving an initial PCR within 2 months of birth  </h4>
+                                    <div class="graph" id="pcr">
+                                        <p class="card-text"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+ 
                                             
                        
                     </div>
@@ -123,11 +192,11 @@
         <!-- *********** WeekPicker/> ************** -->
         
         <!-- *********** <Highcharts ************** -->
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/8.1.1/es-modules/highcharts.src.min.js"></script>-->
-		<script src="https://code.highcharts.com/highcharts.js"></script>
-		<script src="https://code.highcharts.com/modules/exporting.js"></script>		
-		<script src="https://code.highcharts.com/modules/export-data.js"></script>
-		<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/8.1.1/es-modules/highcharts.src.min.js"></script>
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/8.1.0/highcharts.js"></script> -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/8.1.1/modules/exporting.min.js"></script>		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/8.1.1/modules/export-data.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/8.1.1/modules/accessibility.min.js"></script>
         <!-- *********** Highcharts/> ************** -->
 
 
@@ -155,7 +224,7 @@
             <!-- render Fn -->
             <script>
                 function renderAll() {
-                    let page_title = {title: 'NASCOP PMTCT Cascades'}
+                    let page_title = {title: 'Priority Indicators'}
                     let page_filters = {
                         is_county:true, 
                         is_subcounty:false, 
@@ -193,7 +262,7 @@
                 if(prop && prop.ou){
                     org_unit = prop.ou
                 }
-                let prd = `LAST_YEAR`
+                let prd = `LAST_12_MONTHS`
                 if(prop && prop.pe){
                     prd = prop.pe
                 }
@@ -211,356 +280,831 @@
                 }
                 
 
-                
-                let ancascade = `https://hiskenya.org/api/analytics.json?dimension=ou:${org_unit}&dimension=dx:Fz0LzxMT1vV;uSxBUWnagGg;i5jVVTm1vI8;pct05jgGcLt;xNTM673ne69;KsxPBOVAyjJ;ivtLMB7qdKg;xvUt174iyYS;kU5ew70I7kj;vlme3PThHl1;AlWRnztxhOU;KMy83Jn1QgO;VsRrzNMda22;cmeMfuPL3VL;qp8WQXmWtnr;MHmKiukySbZ;ArG6zbCMBr2;RsYvCg0aeuZ&filter=pe:${finalpe}&displayProperty=NAME`
-                let estimated_pmtct= `https://hiskenya.org/api/analytics.json?dimension=ou:${org_unit}&dimension=dx:ZH8BGmU9SHJ&filter=pe:${yr}&displayProperty=NAME`
                 // let data = fetchdata(ancascade)
-                getAnc(ancascade)
-                getMaternal(ancascade,estimated_pmtct)
-                // getInfant()
 
-            
+                let attending_anc = `https://hiskenya.org/api/29/analytics.json?dimension=dx:pct05jgGcLt;f9vesk5d4IY&dimension=pe:${finalpe}&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
+                let attending_target = `https://hiskenya.org/api/29/analytics.json?dimension=dx:pct05jgGcLt;f9vesk5d4IY&filter=ou:${org_unit}&filter=pe:${finalpe}&displayProperty=NAME&outputIdScheme=UID`
+
+                let syphilis = `https://hiskenya.org/api/29/analytics.json?dimension=dx:pct05jgGcLt;uvBuzBj0AbL&dimension=pe:${finalpe}&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
+                let syphilis_target = `https://hiskenya.org/api/29/analytics.json?dimension=dx:uvBuzBj0AbL;pct05jgGcLt&filter=ou:${org_unit}&filter=pe:${finalpe}&displayProperty=NAME`
+
+                let haart = `https://hiskenya.org/api/29/analytics.json?dimension=dx:XBaEY6d5bzt;Hp2jBjAsu8U&dimension=pe:${finalpe}&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
+                let haart_target = `https://hiskenya.org/api/29/analytics.json?dimension=dx:XBaEY6d5bzt;Hp2jBjAsu8U&filter=ou:${org_unit}&filter=pe:${finalpe}&displayProperty=NAME&outputIdScheme=UID`
+               
+                let hei = `https://hiskenya.org/api/29/analytics.json?dimension=dx:XBaEY6d5bzt;LhVCexhVr4n&dimension=pe:${finalpe}&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
+                let hei_target = `https://hiskenya.org/api/29/analytics.json?dimension=dx:XBaEY6d5bzt;LhVCexhVr4n&filter=ou:${org_unit}&filter=pe:${finalpe}&displayProperty=NAME&outputIdScheme=UID`
+
+                let pcr = `https://hiskenya.org/api/29/analytics.json?dimension=dx:XBaEY6d5bzt;UIok7l6W4nh&dimension=pe:${finalpe}&filter=ou:${org_unit}&displayProperty=NAME&outputIdScheme=UID`
+                let pcr_target = `https://hiskenya.org/api/29/analytics.json?dimension=dx:XBaEY6d5bzt;UIok7l6W4nh&filter=ou:${org_unit}&filter=pe:${finalpe}&displayProperty=NAME&outputIdScheme=UID`
+
+                
+                getWomenAnc(attending_anc)
+                getWomenAnc_target(attending_target)
+                getSyphilis(syphilis)
+                getSyphilis_target(syphilis_target)
+                getHaart(haart)
+                getHaart_target(haart_target)
+                getHei(hei)
+                getHei_target(hei_target)
+                getPcr(pcr)
+                getPcr_target(pcr_target)
+               
+
+
         }
 
-            function getAnc(url){
-                //dictionaries used to maintain order of the values
-                //indicators for reached anc
-                let reached = {
-                    'pct05jgGcLt': 'Estimated Number of Pregnant Women',
-                    'uSxBUWnagGg': 'MOH 731 1st ANC Visits HV02-01',
-                    'vlme3PThHl1': 'Number tested for HIV at ANC',
-                    'i5jVVTm1vI8': 'MOH 731 Syphilis Screened_1st ANC HV02-24',
-                    'Fz0LzxMT1vV': 'Pregnant women completing 4 ANC visits',
-                    'KsxPBOVAyjJ': 'Delivery to HIV+ Mothers'
-                };
 
-                //indicators for missed opportunities
-                let missed = {
-                    'placeholder2': 0,
-                    'placeholder1': 0,
-                    'AlWRnztxhOU': 'Number tested for HIV at ANC Missed Opportunity',
-                    'xNTM673ne69': 'ANC Testing for Syphilis Missed Opportunity',
-                    'qp8WQXmWtnr': 'Pregnant women completing 4 ANC visits missed opportunities',
-                    'ivtLMB7qdKg': 'Delivery to HIV+ Mothers Missed Opportunity'
-   
-                }
-                //unlabelled values to plot
-                let reached_values = [];
-                let missed_values = [];
-                let unreached_values = [];
-            justFetch(url, {})
-                .then(response=>{
-                    response.rows.map( row => {
-                            if(row[0] in reached) {
-                                reached[row[0]] = parseInt(row[2]);
-                            } else if(row[0] in missed){
-                                missed[row[0]] = parseInt(row[2]);
-                            }
-                        }
-                    );
-
+            function getWomenAnc(url){
+                justFetch(url, {})
+                .then(response => {
+                    var cTitle = 'Proportion of expectant women attending 1st ANC '
                     var theorgunit = response.metaData.dimensions.ou[0];
-                    var curorg = response.metaData.items[theorgunit].name;
-                    var periodname = []
-                    response.metaData.dimensions.pe.map(pe=>{
-                        periodname.push(response.metaData.items[pe].name)
+                    var curorg = response.metaData.items[theorgunit].name;   
+                    var dx = response.metaData.dimensions.dx;
+                    var pe = response.metaData.dimensions.pe;
+                    var periodName = []
+                    var dataRows = []
+                    var stacking = ''
+                    let dataToPlot = []
+
+                    dataValues = Array.from(response.rows, r => r[3])
+                    const { rows } = response
+                    response.metaData.dimensions.pe.map(pe => {
+                        periodName.push(response.metaData.items[pe].name)
+
+
+                    })
+                    const getDXName = (id) => {
+                        return response.metaData.items[id].name
+                    }
+                    const toNumbers = arr => arr.map(Number);
+                    // console.log(pe)
+
+                    dx.map((d_x,ix)=>{
+                        let datapoint = {}
+                        datapoint.name = response.metaData.items[d_x].name
+                        datapoint.data = []
+                        datapoint.type = 'column'
+                        let da_ta
+                        pe.map(p_e=>{
+                            let rw = response.rows.find(rw1=>rw1[response.headers.findIndex(jk => jk.name == "dx")] == d_x && rw1[response.headers.findIndex(jk => jk.name == "pe")] == p_e) || [0,0,0,0,0]
+                            datapoint.data.push(parseFloat(rw[
+                                response.headers.findIndex(jk => jk.name == "value")
+                            ]))
+                        })
+                        
+                        if (datapoint.name.toLowerCase().split(" ").join("_").includes("estimated_number_of_pregnant_women")) {
+                                datapoint.data.map(data=>{
+                                    if(pe[0].length == 6){
+                                    da_ta = parseInt((data /12).toFixed(0))
+                                    }else{
+                                    da_ta = parseInt((data).toFixed(0))
+                                    }
+                                    datapoint.data.push(da_ta)
+                                })
+                             let len = parseInt(datapoint.data.length)/2
+                                datapoint.data.splice(0,len)
+                            }
+                        dataToPlot.push(datapoint)
+                        
                         
                     })
-                    var fperiodname = periodRange()
-                    function periodRange() {  
-                    let finalperiodname = []
-                    finalperiodname.push(periodname[0]); 
-                    finalperiodname.push(periodname[periodname.length-1]);  
+                     
                     
-                    return finalperiodname
-                    } 
-
-                    //convert dictionary to array by extracting values only
-                    reached_values = Object.keys(reached).map(function (key) {
-                        return reached[key];
-                    });
-                    missed_values = Object.keys(missed).map(function (key) {
-                        return missed[key];
-                    });
-
-                    const unreached = reached_values[0] - reached_values[1];
-                    unreached_values = [0, unreached, unreached, unreached, unreached,unreached];
-
-                    //plot the charts
-                    Highcharts.chart('anc', {
-                            chart: {
-                                type: 'bar'
-                            },
-                            title: {
-                                text: fperiodname[0] +' - '+fperiodname[1]+' '+curorg
-                            },
-                            xAxis: {
-                                categories: ['Expected Pregnancies', 'First ANC Visit','Known HIV status at ANC','Testing for Syphilis', 'Pregnant women completing 4 ANC visit', 'Skilled Deliveries'  ]
-                            },
-                            yAxis: {
-                                min: 0,
-                                title: {
-                                    text: 'Maternal Population'
-                                }
-                            },
-                            legend: {
-                                reversed: true
-                            },
-                            plotOptions: {
-                                    series: {
-                                        dataLabels: {
-                                            enabled: true,
-                                            align: 'center',
-                                            color: '#FFFFFF'
-                                        },
-                                        stacking: 'normal'
-
-                                    }
-                                },
-                            series: [{
-                                name: 'Unreached Mothers',
-                                data: unreached_values,
-                                color:'#615e5d'
-                            }, {
-                                name: 'Missed Opportunities',
-                                data: missed_values,
-                                color:'#f28f43'
-                            }, {
-                                name: 'Reached Mothers',
-                                data: reached_values,
-                                color:'#2f7ed8'
-                            }]
-                        });
+                    var fperiodName = periodRange(periodName)
+                    let den = dataToPlot.find(r=>r.name=="Estimated Number of Pregnant Women")?.data || 0
+                    let num = dataToPlot.find(r=>r.name=="MOH 711 New ANC clients")?.data || 0
+                    let Achieved =[]
+                    num.map(dataa=>{
+                        let f_archived = parseInt((dataa/den[0])*100)
+                        Achieved.push(f_archived)
+                    }) 
+                    console.log(dataToPlot)
+                    //  plotGraph(x_array, "Period", dataToPlot, "Proportions", "Proportion of IPTp missed opportunities referred to the Health Facility - "+response.metaData.items[response.metaData.dimensions.ou[0]].name, null, 'anc', "line", null)
+                    drawSpines('anc', cTitle, periodName, fperiodName, curorg, dataToPlot, stacking,'', Achieved)
 
                 });
+
             }
 
-            function getMaternal(url,e_url){ 
-                let reached = {
-                    'ZH8BGmU9SHJ': 'Need for PMTCT',
-                    'VsRrzNMda22': 'PMTCT Total Positive',
-                    'ArG6zbCMBr2': 'Total Maternal HAART',
-                    'KMy83Jn1QgO': 'PMTCT Infant Prophylaxis',
-                    'KsxPBOVAyjJ': 'Delivery to HIV+ Mothers'
-                };
+            function getWomenAnc_target(url){
+                justFetch(url, {})
+                .then(response => {
+                    var cTitle = 'Proportion of expectant women attending 1st ANC '
+                    var theorgunit = response.metaData.dimensions.ou[0];
+                    var curorg = response.metaData.items[theorgunit].name;   
+                    var dx = response.metaData.dimensions.dx;
+                    var pe = response.metaData.dimensions.pe;
+                    var periodName = []
+                    var dataRows = []
+                    var stacking = ''
+                    let dataToPlot = []
+                    let finalData = []
+                    finalData.name =[]
+                    finalData.data = []
+                    var color = ["#7cb5ec","#90ed7d","#434348"]
 
-                //indicators for missed opportunities
-                let missed = {
-                    'placeholder2': 0,
-                    'placeholder1': 0,
-                    'kU5ew70I7kj': 'Maternal HAART Missed Opportunities',
-                    'xvUt174iyYS': 'Infant Prophylaxis Missed Opportunity',
-                    'ivtLMB7qdKg': 'Delivery to HIV+ Mothers Missed Opportunity'
-   
-                }
-                //unlabelled values to plot
-                let reached_values = [];
-                let missed_values = [];
-                let unreached_values = [];
-                var res = []
-
-                console.log('url',url)
-
-                console.log('eurl',e_url)
-            justFetch(url, {})
-                .then(response1=>{                    
-                    justFetch(e_url,{})
-                    .then(response2=>{                    
-                    res.push(response1)
-                    res = [...res,response2]
-                    res[0].rows.map( row => {
-                            if(row[0] in reached) {
-                                reached[row[0]] = parseInt(row[2]);
-                            } else if(row[0] in missed){
-                                missed[row[0]] = parseInt(row[2]);
-                            }
-                        }
-                    );
-                    res[1].rows.map( row => {
-                            if(row[0] in reached) {
-                                reached[row[0]] = parseInt(row[2]);
-                            } else if(row[0] in missed){
-                                missed[row[0]] = parseInt(row[2]);
-                            }
-                        }
-                    );
-                
                     
-                    var theorgunit = res[0].metaData.dimensions.ou[0];
-                    var curorg = res[0].metaData.items[theorgunit].name;
 
-                    var periodname = []
-                    response1.metaData.dimensions.pe.map(pe=>{
-                        periodname.push(response1.metaData.items[pe].name)
+
+                    dataValues = Array.from(response.rows, r => r[3])
+                    const { rows } = response
+                    response.metaData.dimensions.pe.map(pe => {
+                        periodName.push(response.metaData.items[pe].name)
+
+
+                    })
+                    const getDXName = (id) => {
+                        return response.metaData.items[id].name
+                    }
+                    const toNumbers = arr => arr.map(Number);
+                    // console.log(pe)
+
+
+                    dx.map((d_x,ix)=>{
+                        
+                        let datapoint = {}
+                        datapoint.name = response.metaData.items[d_x].name
+                        pe.map(p_e=>{
+                            let rw = response.rows.find(rw1=>rw1[response.headers.findIndex(jk => jk.name == "dx")] == d_x ) || [0,0,0,0,0]
+                            datapoint.y = parseFloat(rw[
+                                response.headers.findIndex(jk => jk.name == "value")
+                            ])
+                        })
+                        
+                        
+                        
+                        // if (datapoint.name.toLowerCase().split(" ").join("_").includes("estimated_number_of_pregnant_women")) {
+                        //         datapoint.data.map(data=>{
+                        //             let da_ta = parseInt((data /12).toFixed(0))
+                        //             datapoint.data.push(da_ta)
+                        //         })
+                        //      let len = parseInt(datapoint.data.length)/2
+                        //         datapoint.data.splice(0,len)
+                        // //     }
+                        //     console.log(datapoint)
+                        dataToPlot.push(datapoint)
+
+                        
                         
                     })
-                    var fperiodname = periodRange()
-                    function periodRange() {  
-                    let finalperiodname = []
-                    finalperiodname.push(periodname[0]); 
-                    finalperiodname.push(periodname[periodname.length-1]);  
-                    
-                    return finalperiodname
-                    } 
-
-                    
                    
+                    var fperiodName = periodRange(periodName)
+                    let len = response.metaData.dimensions.pe.length
+                    let f_den
+                    let len_1 =  pe[0].length
+                    let den = dataToPlot.find(r=>r.name=="Estimated Number of Pregnant Women")?.y || 0
+                    let num = dataToPlot.find(r=>r.name=="MOH 711 New ANC clients")?.y || 0
                     
-                    //convert dictionary to array by extracting values only
-                    reached_values = Object.keys(reached).map(function (key) {
-                        return reached[key];
-                    });
-                    missed_values = Object.keys(missed).map(function (key) {
-                        return missed[key];
-                    });
-
-                    const unreached = reached_values[0] - reached_values[1];
-                    unreached_values = [0, reached_values[0] - reached_values[1], unreached, unreached, unreached];
-                Highcharts.chart('Maternal', {
-                            chart: {
-                                type: 'bar'
-                            },
-                            title: {
-                                text: fperiodname[0] +' - '+fperiodname[1]+' '+curorg
-                            },
-                            xAxis: {
-                                categories: ['Need for PMTCT', 'PMTCT Positives', 'Maternal HAART', 'Infant Prophylaxis','Delivery to HIV+ Mothers' ]
-                            },
-                            yAxis: {
-                                min: 0,
-                                title: {
-                                    text: 'Maternal Population'
-                                }
-                            },
-                            legend: {
-                                reversed: true
-                            },
-                            plotOptions: {
-                                    series: {
-                                        dataLabels: {
-                                            enabled: true,
-                                            align: 'center',
-                                            color: '#FFFFFF'
-                                        },
-                                        stacking: 'normal'
-                                    
-                                    }
-                                },
-                            series: [{
-                                name: 'Unreached Mothers',
-                                data: unreached_values,
-                                color:'#615e5d'
-                            }, {
-                                name: 'Missed Opportunities',
-                                data: missed_values,
-                                color:'#f28f43'
-                            }, {
-                                
-                                name: 'Reached Mothers',
-                                data: reached_values,
-                                color:'#2f7ed8'
-                            }]
-                        });
-                    })
-                
-            });
-                                        
-            }
-            function getInfant(url){
-                let reached = {
-                    'pct05jgGcLt': 'Estimated Number of Pregnant Women',
-                    'uSxBUWnagGg': 'MOH 731 1st ANC Visits HV02-01',
-                    'vlme3PThHl1': 'Number tested for HIV at ANC',
-                    'i5jVVTm1vI8': 'MOH 731 Syphilis Screened_1st ANC HV02-24',
-                    'Fz0LzxMT1vV': 'Pregnant women completing 4 ANC visits'
-                };
-
-                //indicators for missed opportunities
-                let missed = {
-                    'placeholder2': 0,
-                    'placeholder1': 0,
-                    'AlWRnztxhOU': 'Number tested for HIV at ANC Missed Opportunity',
-                    'xNTM673ne69': 'ANC Testing for Syphilis Missed Opportunity',
-                    'qp8WQXmWtnr': 'Pregnant women completing 4 ANC visits missed opportunities'
-   
-                }
-                //unlabelled values to plot
-                let reached_values = [];
-                let missed_values = [];
-                let unreached_values = [];
-            justFetch(url, {})
-                .then(response=>{
-                    console.log(url)
-                    response.rows.map( row => {
-                            if(row[0] in reached) {
-                                reached[row[0]] = parseInt(row[2]);
-                            } else if(row[0] in missed){
-                                missed[row[0]] = parseInt(row[2]);
-                            }
+                    if (len_1 == 6){
+                         f_den = parseInt(((len/12)*den).toFixed(0))
+                    }else if(len_1 == 4){
+                        f_den = parseInt((den).toFixed(0))
+                    }else{
+                         f_den = parseInt((den/12).toFixed(0))
                         }
-                    );
-                    
+                    let gap = parseInt((f_den - num).toFixed(0))
+                    dataToPlot.push({
+                        name: "Gap",
+                        y: gap,
+                        color:"#7cb5ec"
+                    })
+                    if (dataToPlot[0].name = "Estimated Number of Pregnant Women"){
+                        dataToPlot.shift()
+                    }
+                    if (dataToPlot[0].name = "MOH 711 New ANC clients"){
+                       dataToPlot[0].name = "Results"
+                       dataToPlot[0].color = "#434348"
+                    }
+                    console.log(dataToPlot)
+                    drawPie('anc_target',cTitle,dataToPlot, periodName, fperiodName, curorg, null)
+                    // p
+
+                });
+
+            }
+
+            function getSyphilis(url){
+                justFetch(url, {})
+                .then(response => {
+                    var cTitle = 'Proportion of pregnant women tested for Syphilis '
                     var theorgunit = response.metaData.dimensions.ou[0];
-                    var curorg = response.metaData.items[theorgunit].name;
+                    var curorg = response.metaData.items[theorgunit].name;   
+                    var dx = response.metaData.dimensions.dx;
+                    var pe = response.metaData.dimensions.pe;
+                    var periodName = []
+                    var dataRows = []
+                    var stacking = ''
+                    let dataToPlot = []
 
-                    
-                    console.log(response.metaData.items[response.metaData.dimensions.pe[0]].name)
-                    
-                    //convert dictionary to array by extracting values only
-                    reached_values = Object.keys(reached).map(function (key) {
-                        return reached[key];
-                    });
-                    missed_values = Object.keys(missed).map(function (key) {
-                        return missed[key];
-                    });
+                    dataValues = Array.from(response.rows, r => r[3])
+                    const { rows } = response
+                    response.metaData.dimensions.pe.map(pe => {
+                        periodName.push(response.metaData.items[pe].name)
 
-                    const unreached = reached_values[0] - reached_values[1];
-                    unreached_values = [0, unreached, unreached, unreached, unreached];
-                Highcharts.chart('Infant', {
-                            chart: {
-                                type: 'bar'
-                            },
-                            title: {
-                                text: 'Infant HIV Cascade'
-                            },
-                            xAxis: {
-                                categories: ['Neonatal PMTCT','Positive Pg & Br', '1st PCR', 'PCR Within Two Months', 'PCR Positived', 'Under 1 Starting ART']
-                            },
-                            yAxis: {
-                                min: 0,
-                                title: {
-                                    text: 'Maternal Population'
-                                }
-                            },
-                            legend: {
-                                reversed: true
-                            },
-                            plotOptions: {
-                                    series: {
-                                        dataLabels: {
-                                            enabled: true,
-                                            align: 'center',
-                                            color: '#FFFFFF'
-                                        },
-                                        stacking: 'normal'
-                                    
+
+                    })
+                    const getDXName = (id) => {
+                        return response.metaData.items[id].name
+                    }
+                    const toNumbers = arr => arr.map(Number);
+                    // console.log(pe)
+
+                    dx.map((d_x,ix)=>{
+                        let datapoint = {}
+                        datapoint.name = response.metaData.items[d_x].name
+                        datapoint.data = []
+                        datapoint.type = 'column'
+                        let da_ta
+                        pe.map(p_e=>{
+                            let rw = response.rows.find(rw1=>rw1[response.headers.findIndex(jk => jk.name == "dx")] == d_x && rw1[response.headers.findIndex(jk => jk.name == "pe")] == p_e) || [0,0,0,0,0]
+                            datapoint.data.push(parseFloat(rw[
+                                response.headers.findIndex(jk => jk.name == "value")
+                            ]))
+                        })
+                        
+                        if (datapoint.name.toLowerCase().split(" ").join("_").includes("estimated_number_of_pregnant_women")) {
+                                datapoint.data.map(data=>{
+                                    if(pe[0].length == 6){
+                                    da_ta = parseInt((data /12).toFixed(0))
+                                    }else{
+                                    da_ta = parseInt((data).toFixed(0))
                                     }
-                                },
-                            series: [{
-                                name: 'Unreached Infants',
-                                data: [0, 0,0,-110, -110, -110]
-                                
-                            }, {
-                                name: 'Missed Opportunity',
-                                data: [0,0,1956,6426,0,167]
-                            }, {
-                                name: 'Reached Infants',
-                                data: [17374,17484,15528,11058,458,291]
-                            }]
-                        });
-                
-            });
-                                        
+                                    datapoint.data.push(da_ta)
+                                })
+                             let len = parseInt(datapoint.data.length)/2
+                                datapoint.data.splice(0,len)
+                            }
+                        dataToPlot.push(datapoint)
+                        
+                        
+                    })
+                     
+                    console.log(dataToPlot)
+                    var fperiodName = periodRange(periodName)
+                    let den = dataToPlot.find(r=>r.name=="Estimated Number of Pregnant Women")?.data || 0
+                    let num = dataToPlot.find(r=>r.name=="MOH 711 ANC clients tested for syphilis")?.data || 0
+                    let Achieved =[]
+                    num.map(dataa=>{
+                        let f_archived = parseInt((dataa/den[0])*100)
+                        Achieved.push(f_archived)
+                    }) 
+                    console.log(dataToPlot)
+                    //  plotGraph(x_array, "Period", dataToPlot, "Proportions", "Proportion of IPTp missed opportunities referred to the Health Facility - "+response.metaData.items[response.metaData.dimensions.ou[0]].name, null, 'anc', "line", null)
+                    drawSpines('syphilis', cTitle, periodName, fperiodName, curorg, dataToPlot, stacking,'', Achieved)
+
+                });
+
+            }
+            function getSyphilis_target(url){
+                justFetch(url, {})
+                .then(response => {
+                    var cTitle = 'Proportion of pregnant women tested for Syphilis '
+                    var theorgunit = response.metaData.dimensions.ou[0];
+                    var curorg = response.metaData.items[theorgunit].name;   
+                    var dx = response.metaData.dimensions.dx;
+                    var pe = response.metaData.dimensions.pe;
+                    var periodName = []
+                    var dataRows = []
+                    var stacking = ''
+                    let dataToPlot = []
+                    let finalData = []
+                    finalData.name =[]
+                    finalData.data = []
+                    var color = ["#7cb5ec","#90ed7d","#434348"]
+
+                    
+
+
+                    dataValues = Array.from(response.rows, r => r[3])
+                    const { rows } = response
+                    response.metaData.dimensions.pe.map(pe => {
+                        periodName.push(response.metaData.items[pe].name)
+
+
+                    })
+                    const getDXName = (id) => {
+                        return response.metaData.items[id].name
+                    }
+                    const toNumbers = arr => arr.map(Number);
+                    // console.log(pe)
+
+
+                    dx.map((d_x,ix)=>{
+                        
+                        let datapoint = {}
+                        datapoint.name = response.metaData.items[d_x].name
+                        pe.map(p_e=>{
+                            let rw = response.rows.find(rw1=>rw1[response.headers.findIndex(jk => jk.name == "dx")] == d_x ) || [0,0,0,0,0]
+                            datapoint.y = parseFloat(rw[
+                                response.headers.findIndex(jk => jk.name == "value")
+                            ])
+                        })
+                        
+                        dataToPlot.push(datapoint)
+
+                        
+                        
+                    })
+                   
+                    var fperiodName = periodRange(periodName)
+                    let len = response.metaData.dimensions.pe.length
+                    let f_den
+                    let len_1 =  pe[0].length
+                    let den = dataToPlot.find(r=>r.name=="Estimated Number of Pregnant Women")?.y || 0
+                    let num = dataToPlot.find(r=>r.name=="MOH 711 ANC clients tested for syphilis")?.y || 0
+                    
+                    if (len_1 == 6){
+                         f_den = parseInt(((len/12)*den).toFixed(0))
+                    }else if(len_1 == 4){
+                        f_den = parseInt((den).toFixed(0))
+                    }else{
+                         f_den = parseInt((den/12).toFixed(0))
+                        }
+                    let gap = parseInt((f_den - num).toFixed(0))
+                    dataToPlot.push({
+                        name: "Gap",
+                        y: gap,
+                        color:"#7cb5ec"
+                    })
+                    if (dataToPlot[0].name = "Estimated Number of Pregnant Women"){
+                        dataToPlot.shift()
+                    }
+                    if (dataToPlot[0].name = "MOH 711 ANC clients tested for syphilis"){
+                       dataToPlot[0].name = "Results"
+                       dataToPlot[0].color = "#434348"
+                    }
+                    drawPie('syphilis_target',cTitle,dataToPlot, periodName, fperiodName, curorg, null)
+                    // p
+
+                });
+
+            }
+            function getHaart(url){
+                justFetch(url, {})
+                .then(response => {
+                    var cTitle = 'Proportion of HIV infected pregnant and breastfeeding women on HAART '
+                    var theorgunit = response.metaData.dimensions.ou[0];
+                    var curorg = response.metaData.items[theorgunit].name;   
+                    var dx = response.metaData.dimensions.dx;
+                    var pe = response.metaData.dimensions.pe;
+                    var periodName = []
+                    var dataRows = []
+                    var stacking = ''
+                    let dataToPlot = []
+
+                    dataValues = Array.from(response.rows, r => r[3])
+                    const { rows } = response
+                    response.metaData.dimensions.pe.map(pe => {
+                        periodName.push(response.metaData.items[pe].name)
+
+
+                    })
+                    const getDXName = (id) => {
+                        return response.metaData.items[id].name
+                    }
+                    const toNumbers = arr => arr.map(Number);
+                    // console.log(pe)
+
+                    dx.map((d_x,ix)=>{
+                        let datapoint = {}
+                        datapoint.name = response.metaData.items[d_x].name
+                        datapoint.data = []
+                        datapoint.type = 'column'
+                        let da_ta
+                        pe.map(p_e=>{
+                            let rw = response.rows.find(rw1=>rw1[response.headers.findIndex(jk => jk.name == "dx")] == d_x && rw1[response.headers.findIndex(jk => jk.name == "pe")] == p_e) || [0,0,0,0,0]
+                            datapoint.data.push(parseFloat(rw[
+                                response.headers.findIndex(jk => jk.name == "value")
+                            ]))
+                        })
+                        
+                        if (datapoint.name.toLowerCase().split(" ").join("_").includes("Need for PMTCT (KP at 1st ANC + Newly Positive at ANC)")) {
+                                datapoint.data.map(data=>{
+                                    if(pe[0].length == 6){
+                                    da_ta = parseInt((data /12).toFixed(0))
+                                    }else{
+                                    da_ta = parseInt((data).toFixed(0))
+                                    }
+                                    datapoint.data.push(da_ta)
+                                })
+                             let len = parseInt(datapoint.data.length)/2
+                                datapoint.data.splice(0,len)
+                            }
+                        dataToPlot.push(datapoint)
+                        
+                        
+                    })
+                     
+                    console.log(dataToPlot)
+                    var fperiodName = periodRange(periodName)
+                    let den = dataToPlot.find(r=>r.name=="Need for PMTCT (KP at 1st ANC + Newly Positive at ANC)")?.data || 0
+                    let num = dataToPlot.find(r=>r.name=="Number on Maternal HAART")?.data || 0
+                    let Achieved =[]
+                    num.map(dataa=>{
+                        let f_archived = parseInt((dataa/den[0])*100)
+                        Achieved.push(f_archived)
+                    }) 
+                    //  plotGraph(x_array, "Period", dataToPlot, "Proportions", "Proportion of IPTp missed opportunities referred to the Health Facility - "+response.metaData.items[response.metaData.dimensions.ou[0]].name, null, 'anc', "line", null)
+                    drawSpines('haart', cTitle, periodName, fperiodName, curorg, dataToPlot, stacking,'', Achieved)
+
+                });
+
+            }
+            function getHaart_target(url){
+                justFetch(url, {})
+                .then(response => {
+                    var cTitle = 'Proportion of HIV infected pregnant and breastfeeding women on HAART'
+                    var theorgunit = response.metaData.dimensions.ou[0];
+                    var curorg = response.metaData.items[theorgunit].name;   
+                    var dx = response.metaData.dimensions.dx;
+                    var pe = response.metaData.dimensions.pe;
+                    var periodName = []
+                    var dataRows = []
+                    var stacking = ''
+                    let dataToPlot = []
+                    let finalData = []
+                    finalData.name =[]
+                    finalData.data = []
+                    var color = ["#7cb5ec","#90ed7d","#434348"]
+
+                    
+
+
+                    dataValues = Array.from(response.rows, r => r[3])
+                    const { rows } = response
+                    response.metaData.dimensions.pe.map(pe => {
+                        periodName.push(response.metaData.items[pe].name)
+
+
+                    })
+                    const getDXName = (id) => {
+                        return response.metaData.items[id].name
+                    }
+                    const toNumbers = arr => arr.map(Number);
+                    // console.log(pe)
+
+
+                    dx.map((d_x,ix)=>{
+                        
+                        let datapoint = {}
+                        datapoint.name = response.metaData.items[d_x].name
+                        pe.map(p_e=>{
+                            let rw = response.rows.find(rw1=>rw1[response.headers.findIndex(jk => jk.name == "dx")] == d_x ) || [0,0,0,0,0]
+                            datapoint.y = parseFloat(rw[
+                                response.headers.findIndex(jk => jk.name == "value")
+                            ])
+                        })
+                        
+                        dataToPlot.push(datapoint)
+
+                        
+                        
+                    })
+                   
+                    var fperiodName = periodRange(periodName)
+                    let len = response.metaData.dimensions.pe.length
+                    let f_den
+                    let len_1 =  pe[0].length
+                    let den = dataToPlot.find(r=>r.name=="Need for PMTCT (KP at 1st ANC + Newly Positive at ANC)")?.y || 0
+                    let num = dataToPlot.find(r=>r.name=="Number on Maternal HAART")?.y || 0
+                    
+                    if (len_1 == 6){
+                         f_den = parseInt(((len/12)*den).toFixed(0))
+                    }else if(len_1 == 4){
+                        f_den = parseInt((den).toFixed(0))
+                    }else{
+                         f_den = parseInt((den/12).toFixed(0))
+                        }
+                    let gap = parseInt((f_den - num).toFixed(0))
+                    dataToPlot.push({
+                        name: "Gap",
+                        y: gap,
+                        color:"#7cb5ec"
+                    })
+                    if (dataToPlot[0].name = "Need for PMTCT (KP at 1st ANC + Newly Positive at ANC)"){
+                        dataToPlot.shift()
+                    }
+                    if (dataToPlot[0].name = "Number on Maternal HAART"){
+                       dataToPlot[0].name = "Results"
+                       dataToPlot[0].color = "#434348"
+                    }
+                    drawPie('haart_target',cTitle,dataToPlot, periodName, fperiodName, curorg, null)
+                    // p
+
+                });
+
+            }
+
+            function getHei(url){
+                justFetch(url, {})
+                .then(response => {
+                    var cTitle = 'Proportion of HIV Exposed Infants on Infant ARV Prophylaxis'
+                    var theorgunit = response.metaData.dimensions.ou[0];
+                    var curorg = response.metaData.items[theorgunit].name;   
+                    var dx = response.metaData.dimensions.dx;
+                    var pe = response.metaData.dimensions.pe;
+                    var periodName = []
+                    var dataRows = []
+                    var stacking = ''
+                    let dataToPlot = []
+
+                    dataValues = Array.from(response.rows, r => r[3])
+                    const { rows } = response
+                    response.metaData.dimensions.pe.map(pe => {
+                        periodName.push(response.metaData.items[pe].name)
+
+
+                    })
+                    const getDXName = (id) => {
+                        return response.metaData.items[id].name
+                    }
+                    const toNumbers = arr => arr.map(Number);
+                    // console.log(pe)
+
+                    dx.map((d_x,ix)=>{
+                        let datapoint = {}
+                        datapoint.name = response.metaData.items[d_x].name
+                        datapoint.data = []
+                        datapoint.type = 'column'
+                        let da_ta
+                        pe.map(p_e=>{
+                            let rw = response.rows.find(rw1=>rw1[response.headers.findIndex(jk => jk.name == "dx")] == d_x && rw1[response.headers.findIndex(jk => jk.name == "pe")] == p_e) || [0,0,0,0,0]
+                            datapoint.data.push(parseFloat(rw[
+                                response.headers.findIndex(jk => jk.name == "value")
+                            ]))
+                        })
+                        
+                        if (datapoint.name.toLowerCase().split(" ").join("_").includes("Need for PMTCT (KP at 1st ANC + Newly Positive at ANC)")) {
+                                datapoint.data.map(data=>{
+                                    if(pe[0].length == 6){
+                                    da_ta = parseInt((data /12).toFixed(0))
+                                    }else{
+                                    da_ta = parseInt((data).toFixed(0))
+                                    }
+                                    datapoint.data.push(da_ta)
+                                })
+                             let len = parseInt(datapoint.data.length)/2
+                                datapoint.data.splice(0,len)
+                            }
+                        dataToPlot.push(datapoint)
+                        
+                        
+                    })
+                     
+                    console.log(dataToPlot)
+                    var fperiodName = periodRange(periodName)
+                    let den = dataToPlot.find(r=>r.name=="Need for PMTCT (KP at 1st ANC + Newly Positive at ANC)")?.data || 0
+                    let num = dataToPlot.find(r=>r.name=="Started on Infant Prophylaxis in ANC, L&D and PNC")?.data || 0
+                    let Achieved =[]
+                    num.map(dataa=>{
+                        let f_archived = parseInt((dataa/den[0])*100)
+                        Achieved.push(f_archived)
+                    }) 
+                    //  plotGraph(x_array, "Period", dataToPlot, "Proportions", "Proportion of IPTp missed opportunities referred to the Health Facility - "+response.metaData.items[response.metaData.dimensions.ou[0]].name, null, 'anc', "line", null)
+                    drawSpines('hei', cTitle, periodName, fperiodName, curorg, dataToPlot, stacking,'', Achieved)
+
+                });
+
+            }
+            
+            function getHei_target(url){
+                justFetch(url, {})
+                .then(response => {
+                    var cTitle = 'Proportion of HIV Exposed Infants on Infant ARV Prophylaxis'
+                    var theorgunit = response.metaData.dimensions.ou[0];
+                    var curorg = response.metaData.items[theorgunit].name;   
+                    var dx = response.metaData.dimensions.dx;
+                    var pe = response.metaData.dimensions.pe;
+                    var periodName = []
+                    var dataRows = []
+                    var stacking = ''
+                    let dataToPlot = []
+                    let finalData = []
+                    finalData.name =[]
+                    finalData.data = []
+
+                    
+
+
+                    dataValues = Array.from(response.rows, r => r[3])
+                    const { rows } = response
+                    response.metaData.dimensions.pe.map(pe => {
+                        periodName.push(response.metaData.items[pe].name)
+
+
+                    })
+                    const getDXName = (id) => {
+                        return response.metaData.items[id].name
+                    }
+                    const toNumbers = arr => arr.map(Number);
+                    // console.log(pe)
+
+
+                    dx.map((d_x,ix)=>{
+                        
+                        let datapoint = {}
+                        datapoint.name = response.metaData.items[d_x].name
+                        pe.map(p_e=>{
+                            let rw = response.rows.find(rw1=>rw1[response.headers.findIndex(jk => jk.name == "dx")] == d_x ) || [0,0,0,0,0]
+                            datapoint.y = parseFloat(rw[
+                                response.headers.findIndex(jk => jk.name == "value")
+                            ])
+                        })
+                        
+                        dataToPlot.push(datapoint)
+
+                        
+                        
+                    })
+                   
+                    var fperiodName = periodRange(periodName)
+                    let len = response.metaData.dimensions.pe.length
+                    let f_den
+                    let len_1 =  pe[0].length
+                    let den = dataToPlot.find(r=>r.name=="Need for PMTCT (KP at 1st ANC + Newly Positive at ANC)")?.y || 0
+                    let num = dataToPlot.find(r=>r.name=="Started on Infant Prophylaxis in ANC, L&D and PNC")?.y || 0
+                    
+                    if (len_1 == 6){
+                         f_den = parseInt(((len/12)*den).toFixed(0))
+                    }else if(len_1 == 4){
+                        f_den = parseInt((den).toFixed(0))
+                    }else{
+                         f_den = parseInt((den/12).toFixed(0))
+                        }
+                    let gap = parseInt((f_den - num).toFixed(0))
+                    dataToPlot.push({
+                        name: "Gap",
+                        y: gap,
+                        color:"#7cb5ec"
+                    })
+                    if (dataToPlot[0].name = "Need for PMTCT (KP at 1st ANC + Newly Positive at ANC)"){
+                        dataToPlot.shift()
+                    }
+                    if (dataToPlot[0].name = "Started on Infant Prophylaxis in ANC, L&D and PNC"){
+                       dataToPlot[0].name = "Results"
+                       dataToPlot[0].color = "#434348"
+                    }
+                    drawPie('hei_target',cTitle,dataToPlot, periodName, fperiodName, curorg, null)
+                    // p
+
+                });
+
+            }
+            function getPcr(url){
+                justFetch(url, {})
+                .then(response => {
+                    var cTitle = 'Percentage  of HIV Exposed infants receiving an initial PCR within 2 months of birth'
+                    var theorgunit = response.metaData.dimensions.ou[0];
+                    var curorg = response.metaData.items[theorgunit].name;   
+                    var dx = response.metaData.dimensions.dx;
+                    var pe = response.metaData.dimensions.pe;
+                    var periodName = []
+                    var dataRows = []
+                    var stacking = ''
+                    let dataToPlot = []
+
+                    dataValues = Array.from(response.rows, r => r[3])
+                    const { rows } = response
+                    response.metaData.dimensions.pe.map(pe => {
+                        periodName.push(response.metaData.items[pe].name)
+
+
+                    })
+                    const getDXName = (id) => {
+                        return response.metaData.items[id].name
+                    }
+                    const toNumbers = arr => arr.map(Number);
+                    // console.log(pe)
+
+                    dx.map((d_x,ix)=>{
+                        let datapoint = {}
+                        datapoint.name = response.metaData.items[d_x].name
+                        datapoint.data = []
+                        datapoint.type = 'column'
+                        let da_ta
+                        pe.map(p_e=>{
+                            let rw = response.rows.find(rw1=>rw1[response.headers.findIndex(jk => jk.name == "dx")] == d_x && rw1[response.headers.findIndex(jk => jk.name == "pe")] == p_e) || [0,0,0,0,0]
+                            datapoint.data.push(parseFloat(rw[
+                                response.headers.findIndex(jk => jk.name == "value")
+                            ]))
+                        })
+                        
+                        if (datapoint.name.toLowerCase().split(" ").join("_").includes("Need for PMTCT (KP at 1st ANC + Newly Positive at ANC)")) {
+                                datapoint.data.map(data=>{
+                                    if(pe[0].length == 6){
+                                    da_ta = parseInt((data /12).toFixed(0))
+                                    }else{
+                                    da_ta = parseInt((data).toFixed(0))
+                                    }
+                                    datapoint.data.push(da_ta)
+                                })
+                             let len = parseInt(datapoint.data.length)/2
+                                datapoint.data.splice(0,len)
+                            }
+                        dataToPlot.push(datapoint)
+                        
+                        
+                    })
+                     
+                    console.log(dataToPlot)
+                    var fperiodName = periodRange(periodName)
+                    let den = dataToPlot.find(r=>r.name=="Need for PMTCT (KP at 1st ANC + Newly Positive at ANC)")?.data || 0
+                    let num = dataToPlot.find(r=>r.name=="MOH 731  Initial PCR < 8wks       HV02-44")?.data || 0
+                    let Achieved =[]
+                    num.map(dataa=>{
+                        let f_archived = parseInt((dataa/den[0])*100)
+                        Achieved.push(f_archived)
+                    }) 
+                    //  plotGraph(x_array, "Period", dataToPlot, "Proportions", "Proportion of IPTp missed opportunities referred to the Health Facility - "+response.metaData.items[response.metaData.dimensions.ou[0]].name, null, 'anc', "line", null)
+                    drawSpines('pcr', cTitle, periodName, fperiodName, curorg, dataToPlot, stacking,'', Achieved)
+
+                });
+
+            }
+            
+            function getPcr_target(url){
+                justFetch(url, {})
+                .then(response => {
+                    var cTitle = 'Percentage  of HIV Exposed infants receiving an initial PCR within 2 months of birth'
+                    var theorgunit = response.metaData.dimensions.ou[0];
+                    var curorg = response.metaData.items[theorgunit].name;   
+                    var dx = response.metaData.dimensions.dx;
+                    var pe = response.metaData.dimensions.pe;
+                    var periodName = []
+                    var dataRows = []
+                    var stacking = ''
+                    let dataToPlot = []
+                    let finalData = []
+                    finalData.name =[]
+                    finalData.data = []
+
+                    
+
+
+                    dataValues = Array.from(response.rows, r => r[3])
+                    const { rows } = response
+                    response.metaData.dimensions.pe.map(pe => {
+                        periodName.push(response.metaData.items[pe].name)
+
+
+                    })
+                    const getDXName = (id) => {
+                        return response.metaData.items[id].name
+                    }
+                    const toNumbers = arr => arr.map(Number);
+                    // console.log(pe)
+
+
+                    dx.map((d_x,ix)=>{
+                        
+                        let datapoint = {}
+                        datapoint.name = response.metaData.items[d_x].name
+                        pe.map(p_e=>{
+                            let rw = response.rows.find(rw1=>rw1[response.headers.findIndex(jk => jk.name == "dx")] == d_x ) || [0,0,0,0,0]
+                            datapoint.y = parseFloat(rw[
+                                response.headers.findIndex(jk => jk.name == "value")
+                            ])
+                        })
+                        
+                        dataToPlot.push(datapoint)
+
+                        
+                        
+                    })
+                   
+                    var fperiodName = periodRange(periodName)
+                    let len = response.metaData.dimensions.pe.length
+                    let f_den
+                    let len_1 =  pe[0].length
+                    let den = dataToPlot.find(r=>r.name=="Need for PMTCT (KP at 1st ANC + Newly Positive at ANC)")?.y || 0
+                    let num = dataToPlot.find(r=>r.name=="MOH 731  Initial PCR < 8wks       HV02-44")?.y || 0
+                    
+                    if (len_1 == 6){
+                         f_den = parseInt(((len/12)*den).toFixed(0))
+                    }else if(len_1 == 4){
+                        f_den = parseInt((den).toFixed(0))
+                    }else{
+                         f_den = parseInt((den/12).toFixed(0))
+                        }
+                    let gap = parseInt((f_den - num).toFixed(0))
+                    dataToPlot.push({
+                        name: "Gap",
+                        y: gap,
+                        color:"#7cb5ec"
+                    })
+                    if (dataToPlot[0].name = "Need for PMTCT (KP at 1st ANC + Newly Positive at ANC)"){
+                        dataToPlot.shift()
+                    }
+                    if (dataToPlot[0].name = "MOH 731  Initial PCR < 8wks       HV02-44"){
+                       dataToPlot[0].name = "Results"
+                       dataToPlot[0].color = "#434348"
+                    }
+                    drawPie('pcr_target',cTitle,dataToPlot, periodName, fperiodName, curorg, null)
+                    // p
+
+                });
+
             }
         </script>
            

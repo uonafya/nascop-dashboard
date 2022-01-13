@@ -11,8 +11,8 @@ const nav_template = `
     </li>
     
     
-   
-    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index.html" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">PMTCT Cascade Dashboard</span></a></li>
+    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index.html" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">Priority Indicators Dashboard</span></a></li>
+    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="pmtct.html" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">PMTCT Cascade Dashboard</span></a></li>
 
     <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="act.html" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">90 90 90 Cascade Dashboard</span></a></li>
 

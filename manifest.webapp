@@ -1,6 +1,6 @@
 {
-    "version": "1.2.2",
-    "name": "Cascades Dashboard ",
+    "version": "1.1.1",
+    "name": "Nascop Dashboard ",
     "description": "An App to Visualize Nascop indicators",
     "launch_path": "html/index.html",
     "appType": "APP",
